@@ -2,7 +2,13 @@
 export default {
     content: ["./resources/**/*.blade.php"],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                Primary: "#006B60",
+                Secondary: "#649B92",
+                PrimaryD: "#014942",
+            },
+        },
     },
     plugins: [],
 };
