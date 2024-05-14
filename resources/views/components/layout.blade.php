@@ -27,11 +27,4 @@
     <script src="{{ asset('assets/js/slider.js') }}"></script>
     <script src="{{ asset('assets/js/layout.js') }}"></script>
 </body>
-
-     @vite('resources/css/app.css')
-    <title>MKF - Management</title>
-</head>
-<body>
-    @yield('content')
-</body>
 </html>
