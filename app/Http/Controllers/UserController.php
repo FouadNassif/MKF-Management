@@ -11,18 +11,18 @@ class UserController extends Controller
     public function showLoginForm()
     {
         // Show the login form
-        return view('User.login');
+        return view('pages.User.login');
     }
 
     public function showRegistrationForm()
     {
-        return view('User.register');
+        return view('pages.User.register');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'name' => 'required',
+            'phoneNumber' => 'required',
             'password' => 'required',
         ]);
 
@@ -37,12 +37,12 @@ class UserController extends Controller
     {
         // $request the data and validate it
         $request->validate([
-            'name' => 'required|string|unique:Users',
-            'phoneNumber' => 'required|string|unique:Users',
-            'password' => "required|confirmed|min:1",
+            'name' => 'required|string|unique:Users|min:4',
+            'phoneNumber' => 'required|string|unique:Users|min:8',
+            'password' => "required|confirmed|min:8",
         ]);
 
-        // Create the user account and save it to the DB
+        // Add the credentials of the user to the database 
         $user = User::create([
             'name' => $request->name,
             'phoneNumber' => $request->phoneNumber,
@@ -53,6 +53,7 @@ class UserController extends Controller
         // Give the auth to the user 
         Auth::login($user);
 
+        // Return  to the home page
         return redirect('/');
     }
 
@@ -63,14 +64,13 @@ class UserController extends Controller
 
     public function updateProfile(Request $request)
     {
-        
         $request->validate([
-            'name' => 'required|string|unique:Users|max:255',
+            'name' => 'required|string|unique:Users|max:255|min:4',
         ]);
-
         $user = Auth::user();
         if ($user) {
-            $updated = User::where('id', $user->id)->update(['name' => $request->name]);
+            // Update the name based on the userid
+            User::where('id', $user->id)->update(['name' => $request->name]);
             session()->flash('status', 'Your name is updated successfully');
         }
 

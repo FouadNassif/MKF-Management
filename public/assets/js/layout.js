@@ -5,7 +5,5 @@ document.addEventListener('DOMContentLoaded', function () {
             notification.style.display = 'none';
         }
     }
-
-    // Automatically close the notification after 5 seconds
     setTimeout(closeNotification, 5000);
 });

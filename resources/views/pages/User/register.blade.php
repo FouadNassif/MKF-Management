@@ -9,7 +9,7 @@
         }
     </style>
     <div class="w-full h-2/4 flex flex-col justify-center items-center h-svh">
-        <form action="/registerC" method="post"
+        <form action="/register" method="post"
             class="shadow-xl shadow-black rounded-xl bg-white p-10 w-2/4 flex flex-col">
             <h1 class="text-2xl text-Primary text-center">SIGNUP HERE</h1>
             <a href="{{ url()->previous() }}">< Return Back</a>
