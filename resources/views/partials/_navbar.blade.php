@@ -6,8 +6,8 @@
     <div>
         @auth
             <div class="flex items-center">
-                <a href="{{ route('profile') }}" class="text-xl">Profile</a>
-                <a href="{{ route('logout') }}">
+                <a href="{{ route('user.profile') }}" class="text-xl">Profile</a>
+                <a href="{{ route('user.logout') }}">
                     <img src="{{ asset('assets/svg/Logout.svg') }}" class="w-12" alt="logout">
                 </a>
             </div>

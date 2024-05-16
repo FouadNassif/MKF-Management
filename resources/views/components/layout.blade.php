@@ -24,7 +24,6 @@
     @endif
 
     @yield('content')
-    <script src="{{ asset('assets/js/slider.js') }}"></script>
     <script src="{{ asset('assets/js/layout.js') }}"></script>
 </body>
 </html>
