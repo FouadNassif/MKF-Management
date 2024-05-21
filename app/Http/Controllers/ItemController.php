@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\ItemCategory;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
+    public function homePage(){
+        $items = Item::paginate(20);
+        $categories = ItemCategory::get();
+        return view('pages.Restaurant.home', compact('items', 'categories'));
+    }
     public function index()
     {
         return Item::all();

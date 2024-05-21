@@ -5,10 +5,7 @@ use App\Http\Controllers\ItemController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('pages.Restaurant.home');
-});
-
+Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
 // Show the registration Form and Check the registration
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
