@@ -4,7 +4,7 @@
 
 @section('content')
     @include('partials._navbar')
-    <x-slider/>
+    <x-slider />
     <div class="flex justify-center">
         <input type="" class="bg-Secondary text-white outline-none rounded-xl w-11/12 p-2 text-xl"
             placeholder="Search for Itmes...">
@@ -18,8 +18,9 @@
         @endforeach
     </div>
     <div class="flex flex-wrap justify-center">
-        @for ($i = 0; $i < 10; $i++)
+        @for ($i = 0; $i < 20; $i++)
             <x-item-card />
         @endfor
     </div>
+    <script src="{{ asset('assets/js/slider.js') }}"></script>
 @endsection
