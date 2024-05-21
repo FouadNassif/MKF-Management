@@ -18,7 +18,7 @@ class ItemFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'description' => fake()->text(25),
+            'description' => fake()->text(200),
             'price' => fake()->randomFloat(null, 5, 200),
             'imageURL' => 'wedihw0ud0edw0ddw',
             'category_id' => 1,

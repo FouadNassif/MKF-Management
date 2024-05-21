@@ -17,10 +17,22 @@
         @endforeach
     </div>
 
-    <div class="flex flex-wrap justify-center">
-        @foreach ($items as $item)
-            <x-item-card :item="$item" />
-        @endforeach
+    <div class="flex w-full justify-center">
+        <div>
+            @for ($i = 0; $i < count($items) / 3; $i++)
+                <x-item-card :item="$items[$i]" />
+            @endfor
+        </div>
+        <div>
+            @for ($i = ceil(count($items) / 3); $i < (count($items) / 3) * 2; $i++)
+                <x-item-card :item="$items[$i]" />
+            @endfor
+        </div>
+        <div>
+            @for ($i = ceil((count($items) / 3) * 2); $i < count($items); $i++)
+                <x-item-card :item="$items[$i]" />
+            @endfor
+        </div>
     </div>
     <script src="{{ asset('assets/js/slider.js') }}"></script>
 @endsection
