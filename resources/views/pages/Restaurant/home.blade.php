@@ -9,18 +9,18 @@
         <input type="" class="bg-Secondary text-white outline-none rounded-xl w-11/12 p-2 text-xl"
             placeholder="Search for Itmes...">
     </div>
-    <div class="flex overflow-x-scroll mt-5">
-        <?php
-        $ItemsCategory = ['seafood', 'sandwiches', 'pizza', 'burgers', 'drinks', 'seafood', 'sandwiches', 'pizza', 'burgers', 'drinks', 'seafood', 'sandwiches', 'pizza', 'burgers', 'drinks'];
-        ?>
-        @foreach ($ItemsCategory as $category)
-            <h1 class="bg-Secondary rounded-xl text-xl mx-5 p-2 text-white">{{ $category }}</h1>
+    <div class="flex overflow-x-scroll mt-5 w-full">
+        @foreach ($categories as $category)
+            <div class="bg-Secondary rounded-xl text-xl mx-5 p-2 text-white w-1/4 text-center">
+                <a class="block w-32 whitespace-nowrap overflow-hidden text-ellipsis">{{ $category->name }}</a>
+            </div>
         @endforeach
     </div>
+
     <div class="flex flex-wrap justify-center">
-        @for ($i = 0; $i < 20; $i++)
-            <x-item-card />
-        @endfor
+        @foreach ($items as $item)
+            <x-item-card :item="$item" />
+        @endforeach
     </div>
     <script src="{{ asset('assets/js/slider.js') }}"></script>
 @endsection

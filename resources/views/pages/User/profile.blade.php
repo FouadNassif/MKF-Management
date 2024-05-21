@@ -36,15 +36,13 @@
                         @endphp
                         @foreach ($data as $i => $address)
                             @if ($address != null)
-                                <div>
-                                    <x-addressInput :index='($i + 1)' address={{$address}}/>
-                                    <div class="flex items-center justify-center ">
-                                        @if ($i > 0)
-                                            <a href="{{ route('user.deleteAddress', 'address' . ($i + 1)) }}">
-                                                <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
-                                            </a>
-                                        @endif
-                                    </div>
+                                <x-addressInput address='{{ $address }}' :index='$i + 1' />
+                                <div class="flex items-center justify-center ">
+                                    @if ($i > 0)
+                                        <a href="{{ route('user.deleteAddress', 'address' . ($i + 1)) }}">
+                                            <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
+                                        </a>
+                                    @endif
                                 </div>
                             @else
                                 @if ($showInput)
