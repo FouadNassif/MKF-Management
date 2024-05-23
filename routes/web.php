@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -34,10 +35,16 @@ Route::delete('/categories/{category}', [ItemCategoryController::class, "destroy
 Route::put('/categories/{category}', [ItemCategoryController::class, "update"])->name("categories.update");
 
 // Item routes
-Route::get('/categories/{category}/items', [ItemController::class, "index"])->name("categories.items.index");
+Route::get('/items', [ItemController::class, "index"])->name("items.index");
 Route::get('/categories/{category}/item/create', [ItemController::class, "create"])->name("categories.items.create");
 Route::get('/items/{item}', [ItemController::class, "show"])->name("items.show");
 Route::get('/items/{item}/edit', [ItemController::class, "edit"])->name("items.edit");
 Route::post('/categories/{category}/items', [ItemController::class, "store"])->name("categories.items.store");
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
+
+// POS routes
+Route::get('/pos', [PosController::class,'index'])->name('pos.index');
+Route::post('/pos/order', [PosController::class,'order'])->name('pos.order');
+Route::get('/pos/payment', [PosController::class,'payment'])->name('pos.payment.index');
+Route::post('/pos/payment', [PosController::class,'paymentStore'])->name('pos.payment.store');

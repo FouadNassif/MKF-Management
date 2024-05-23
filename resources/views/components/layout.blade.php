@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @yield("head")
     @vite('resources/css/app.css')
     <title>@yield('title')</title>
     <link href='https://fonts.googleapis.com/css?family=Jockey One' rel='stylesheet'>
@@ -24,7 +26,6 @@
     @endif
 
     @yield('content')
-    <script src="{{ asset('assets/js/slider.js') }}"></script>
-    <script src="{{ asset('assets/js/layout.js') }}"></script>
+    @yield('scripts')
 </body>
 </html>
