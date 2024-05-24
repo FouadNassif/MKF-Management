@@ -18,6 +18,7 @@
             <x-input name="password" type="password" label="Password"/>
             <x-input name="password_confirmation" type="password" label="Confirm Password"/>
             <x-input name="phoneNumber" type="text" label="Phone Number"/>
+            <x-input name="address1" type="text" label="address 1"/>
             <div class="flex flex-col justify-center items-center w-full mt-5">
                 <button type="submit" class="text-white bg-PrimaryD w-1/4">submit</button>
                 <p class="font-xs mt-5">Already have a Account? <a href="/login" class="text-blue-600 font-xs">Login Here!</a></p>

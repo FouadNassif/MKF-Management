@@ -6,10 +6,7 @@ use App\Http\Controllers\PosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
-Route::get('/', function () {
-    return view('pages.Restaurant.home');
-});
-
+Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
 // Show the registration Form and Check the registration
 Route::get('/register', [UserController::class, 'showRegistrationForm'])->name('register');
@@ -20,9 +17,11 @@ Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::post('/updateProfile', [UserController::class, 'updateProfile']);
-    Route::get('/logout', [UserController::class, 'logout'])->name('logout');
+    // User routes
+    Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
+    Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
 });
 
 // Category routes
