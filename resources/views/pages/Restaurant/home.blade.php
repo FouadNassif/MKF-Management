@@ -17,7 +17,11 @@
         @endforeach
     </div>
 
-    <div class="flex w-full justify-center">
+    @php
+        $itemsObj = (object) $items;
+    @endphp
+
+    <div class="flex w-full justify-center flex-wrap sm:flex-nowrap" id="itemContainer" data-items=" {{ $itemsObj }}">
         <div>
             @for ($i = 0; $i < count($items) / 3; $i++)
                 <x-item-card :item="$items[$i]" />
@@ -34,5 +38,5 @@
             @endfor
         </div>
     </div>
-    <script src="{{ asset('assets/js/slider.js') }}"></script>
+    <script src="{{ asset('assets/js/home.js') }}"></script>
 @endsection

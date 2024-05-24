@@ -124,4 +124,8 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/');
     }
+
+    public function showCart(){
+        return view("pages.User.cart");
+    }
 }

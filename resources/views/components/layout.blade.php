@@ -8,9 +8,6 @@
     @vite('resources/css/app.css')
     <title>@yield('title')</title>
     <link href='https://fonts.googleapis.com/css?family=Jockey One' rel='stylesheet'>
-    <style>
-
-    </style>
 </head>
 
 <body>

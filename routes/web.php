@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
     Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
+    Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
 
 // Category routes
@@ -34,9 +35,9 @@ Route::put('/categories/{category}', [ItemCategoryController::class, "update"])-
 
 // Item routes
 Route::get('/categories/{category}/items', [ItemController::class, "index"])->name("categories.items.index");
-Route::get('/categories/{category}/item/create', [ItemController::class, "create"])->name("categories.items.create");
+Route::get('/item/create', [ItemController::class, "create"])->name("categories.items.create");
 Route::get('/items/{item}', [ItemController::class, "show"])->name("items.show");
 Route::get('/items/{item}/edit', [ItemController::class, "edit"])->name("items.edit");
-Route::post('/categories/{category}/items', [ItemController::class, "store"])->name("categories.items.store");
+Route::post('/item/creates', [ItemController::class, "store"])->name("categories.items.store");
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
