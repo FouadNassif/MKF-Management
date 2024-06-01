@@ -42,8 +42,10 @@ Route::post('/categories/{category}/items', [ItemController::class, "store"])->n
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
 
-// POS routes
-Route::get('/pos', [PosController::class,'index'])->name('pos.index');
-Route::post('/pos/order', [PosController::class,'order'])->name('pos.order');
-Route::get('/pos/payment', [PosController::class,'payment'])->name('pos.payment.index');
-Route::post('/pos/payment', [PosController::class,'paymentStore'])->name('pos.payment.store');
+Route::middleware("roles:admin,cashier,waiter")->group(function () {
+    // POS routes
+    Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+    Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
+    Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
+    Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
+});
