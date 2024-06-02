@@ -27,15 +27,12 @@
                                 name <img src="{{ asset('assets/svg/Edit.svg') }}" class="w-4"></a>
                         </div>
 
-                        <div class="w-11/12 mt-5">
-                            @for ($i = 0; $i < 5; $i++)
-                                <x-cart-card />
-                            @endfor
+                        <div class="w-11/12 mt-5" id="test">
                         </div>
 
                         <div class="flex justify-between border-b-2 border-Primary text-xl w-11/12 mt-5">
                             <p>Total</p>
-                            <p>$55.99</p>
+                            <p id="totalPrice"></p>
                         </div>
 
                         <button class="w-1/4 bg-Primary text-white text-xl p-2 rounded-xl my-5">Place Order</button>
@@ -44,4 +41,7 @@
             </div>
         </div>
     </form>
+@section('scripts')
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
+@endsection
 @endsection

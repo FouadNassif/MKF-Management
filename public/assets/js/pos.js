@@ -39,7 +39,7 @@ function removeItem(ref) {
     let items = JSON.parse(sessionStorage.getItem("POS-Items-Receipt"));
     let totalPrice = Number(sessionStorage.getItem("POS-Total-Price"));
 
-    item = items.filter((item) => item.id == id)[0];
+    let item = items.filter((item) => item.id == id)[0];
 
     items.splice(items.indexOf(item), 1);
 

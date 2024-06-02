@@ -10,8 +10,7 @@ export default {
                 Third: "#C3FCF2",
                 Danger: "#FF0001",
             },
-            }
         },
+        plugins: [],
     },
-    plugins: [],
-};
+}

@@ -14,6 +14,8 @@ class ItemController extends Controller
         $categories = ItemCategory::get();
         return view('pages.Restaurant.home', compact('items', 'categories'));
     }
+
+
     public function index()
     {
         return Item::all();
@@ -23,6 +25,7 @@ class ItemController extends Controller
     {
         return view('create');
     }
+
 
     public function store(Request $request)
     {
@@ -69,5 +72,24 @@ class ItemController extends Controller
         $item->update($request->all());
 
         return redirect()->back()->with("success", "Item updated successfully");
+    }
+
+    public function getItems(Request $request)
+    {
+        $body = $request->all();
+        if (isset($body['itemId'])) {
+            $itemId = $body['itemId'];
+            $item = Item::where('id', $itemId)->get();
+            return $item;
+        } else if (isset($body['getAllItems'])) {
+            $items = Item::get();
+            return $items;
+        }
+    }
+
+    public function getAllItem()
+    {
+        $item = Item::get();
+        return $item;
     }
 }

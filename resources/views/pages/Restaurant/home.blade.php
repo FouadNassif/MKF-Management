@@ -4,15 +4,17 @@
 
 @section('content')
     @include('partials._navbar')
+    <link rel="stylesheet" href="{{asset('assets/css/home.css')}}">
     <x-slider />
     <div class="flex justify-center">
-        <input type="" class="bg-Secondary text-white outline-none rounded-xl w-11/12 p-2 text-xl"
-            placeholder="Search for Itmes...">
+        <input type=""
+            class="bg-Secondary text-white outline-none rounded-xl w-11/12 p-3 text-xl placeholder:text-white"
+            placeholder="Search for Itmes... ">
     </div>
     <div class="flex overflow-x-scroll mt-5 w-full">
         @foreach ($categories as $category)
-            <div class="bg-Secondary rounded-xl text-xl mx-5 p-2 text-white w-1/4 text-center">
-                <a class="block w-32 whitespace-nowrap overflow-hidden text-ellipsis">{{ $category->name }}</a>
+            <div class="bg-Secondary rounded-xl text-xl mx-5 py-3 px-4 text-white text-center">
+                <a class="block min-w-20">{{ $category->name }}</a>
             </div>
         @endforeach
     </div>
@@ -38,5 +40,12 @@
             @endfor
         </div>
     </div>
+    <div id="modalCon">
+        
+    </div>
+@section('scripts')
+    <script src="{{ asset('assets/js/slider.js') }}"></script>
+    <script src="{{ asset('assets/js/cart.js') }}"></script>
     <script src="{{ asset('assets/js/home.js') }}"></script>
+@endsection
 @endsection

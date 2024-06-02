@@ -1,0 +1,86 @@
+:root{
+    --Primary: #006B60;
+    --Secondary: #649B92;
+    --PrimaryD: #014942;
+    --Third: #C3FCF2;
+    --Danger: #FF0001;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.modalCon {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.5);
+    height: 100vh;
+    color: white
+}
+
+.modalCon h1 {
+    font-size: 25px;
+}
+
+.modalCon p {
+    font-size: 16px;
+    color: rgb(206, 206, 206);
+}
+
+.modalCon > div {
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    padding: 10px;
+    box-shadow: 10px 10px 17px black;
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+}
+
+.modalCon > div > img {
+    border: 1px solid white;
+}
+
+.modalCon > div > button img {
+    width: 40px;
+}
+
+.modalButtons {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 5%;
+}
+
+.modalButtons div {
+    display: flex;
+}
+
+.modalButtons div input {
+    outline: 0;
+    width: 40px;
+    text-align: center;
+    color: black;
+}
+
+.modalButtons div button {
+    font-size: 30px;
+    padding: 0 10px;
+    background-color: var(--Secondary);
+}
+
+.modalButtons > button {
+    background-color: white;
+    color: var(--PrimaryD);
+    padding: 5px;
+    border-radius: 8px;
+}

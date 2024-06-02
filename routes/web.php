@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::post('/getItems', [ItemController::class, 'getItems'])->name('item.getItemById');
     Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
     Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
@@ -44,7 +45,7 @@ Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
 
 // POS routes
-Route::get('/pos', [PosController::class,'index'])->name('pos.index');
-Route::post('/pos/order', [PosController::class,'order'])->name('pos.order');
-Route::get('/pos/payment', [PosController::class,'payment'])->name('pos.payment.index');
-Route::post('/pos/payment', [PosController::class,'paymentStore'])->name('pos.payment.store');
+Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
+Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
+Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');

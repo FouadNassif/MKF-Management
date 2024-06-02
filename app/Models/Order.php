@@ -15,11 +15,6 @@ class Order extends Model
         "total"
     ];
 
-    public function payment()
-    {
-        return $this->hasOne(Payment::class);
-    }
-
     public function items()
     {
         return $this->hasMany(OrderItem::class, "order_id", "id");
