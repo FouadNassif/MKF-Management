@@ -4,9 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
- */
 class ItemFactory extends Factory
 {
     /**
@@ -20,7 +17,7 @@ class ItemFactory extends Factory
             'name' => fake()->name(),
             'description' => fake()->text(200),
             'price' => fake()->randomFloat(null, 5, 200),
-            'imageURL' => 'wedihw0ud0edw0ddw',
+            'imageURL' => 'burger.jpeg',
             'category_id' => 1,
         ];
     }

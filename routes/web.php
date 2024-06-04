@@ -6,6 +6,8 @@ use App\Http\Controllers\PosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
+use function PHPUnit\Framework\returnSelf;
+
 Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
 // Show the registration Form and Check the registration
@@ -49,3 +51,8 @@ Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
 Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
 Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
 Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
+
+Route::get("/waiters", function () {
+
+    return view('pages.Waiters.index');
+});
