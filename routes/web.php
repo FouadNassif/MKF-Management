@@ -18,6 +18,9 @@ Route::post('/register', [UserController::class, 'userRegister']);
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
 
+Route::post('/item/search', [ItemController::class, 'search'])->name('item.search');
+Route::post('/item/category', [ItemController::class, 'getItemsByCategory'])->name('item.category');
+
 Route::middleware('auth')->group(function () {
     // User routes
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');

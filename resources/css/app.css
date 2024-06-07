@@ -5,6 +5,18 @@
 body {
     font-family: 'Jockey One';
 }
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+#categoryContainer {
+    scroll-behavior: smooth;
+}
 
 .notification {
     position: fixed;
@@ -36,19 +48,30 @@ body {
 .slider-container {
     position: relative;
     max-width: 70%;
+    height: 70vh;
     margin: auto;
     margin-top: 3%;
     overflow: hidden;
 }
 
 .slide {
-    display: none;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: opacity 0.5s ease-in-out;
+}
+.slide img {
+    height: 70vh;
     width: 100%;
 }
-
-.active {
-    display: block;
+.slide.active {
+    opacity: 1;
 }
+
+.slide:not(.active) {
+    opacity: 0;
+}
+
 
 .dots {
     text-align: center;
@@ -65,7 +88,7 @@ body {
     cursor: pointer;
 }
 
-.active-dot {
+.dot.active-dot {
     background-color: white;
     border: 2px solid #006B60;
 }

@@ -24,7 +24,6 @@ input::-webkit-inner-spin-button {
     z-index: 1000;
     background: rgba(0, 0, 0, 0.5);
     height: 100vh;
-    color: white
 }
 
 .modalCon h1 {
@@ -33,7 +32,8 @@ input::-webkit-inner-spin-button {
 
 .modalCon p {
     font-size: 16px;
-    color: rgb(206, 206, 206);
+    color: rgba(50, 50, 50, 0.6);
+    
 }
 
 .modalCon > div {
@@ -44,10 +44,8 @@ input::-webkit-inner-spin-button {
     width: 50%;
     position: absolute;
     bottom: 0;
-}
-
-.modalCon > div > img {
-    border: 1px solid white;
+    background-color: rgb(255, 255, 255);
+    border: 3px solid black;
 }
 
 .modalCon > div > button img {
@@ -69,7 +67,8 @@ input::-webkit-inner-spin-button {
     outline: 0;
     width: 40px;
     text-align: center;
-    color: black;
+    background-color: var(--PrimaryD);
+    color: whitesmoke;
 }
 
 .modalButtons div button {
@@ -79,8 +78,8 @@ input::-webkit-inner-spin-button {
 }
 
 .modalButtons > button {
-    background-color: white;
-    color: var(--PrimaryD);
+    background-color: var(--PrimaryD);
+    color: white;
     padding: 5px;
     border-radius: 8px;
 }

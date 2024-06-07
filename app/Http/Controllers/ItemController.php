@@ -92,4 +92,20 @@ class ItemController extends Controller
         $item = Item::get();
         return $item;
     }
+
+    public function search(Request $request){
+        $body = $request->all();
+        if(isset($body['itemName'])){
+            $items = Item::where('name', 'like', '%' . $body['itemName'] . '%')->get();
+            return $items;
+        }
+    }
+
+    public function getItemsByCategory(Request $request){
+        $body = $request->all();
+        if(isset($body['categoryId'])){
+            $items = Item::where('category_id', $body['categoryId'])->get();
+            return $items;
+        }
+    }
 }

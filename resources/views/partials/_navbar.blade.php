@@ -6,13 +6,6 @@
     <div>
         @auth
             <div class="flex items-center text-xl">
-                <a href="{{ route('user.cart') }}" class="cart-wrapper relative inline-block">
-                    <p id="cartItemsCounter"
-                        class="cart-counter absolute bg-cyan-950 text-2xl px-3 rounded-full left-0 top-1 transform -translate-x-1/2 -translate-y-1/2">
-                    </p>
-                    <img src="{{ asset('assets/svg/Cart.svg') }}" class="w-12" alt="Cart" title="Cart">
-                </a>
-
                 <a href="{{ route('user.profile') }}" class="mx-5"><img src="{{ asset('assets/svg/ProfNav.svg') }}"
                         class="w-12" alt="Profile" title="profile"></a>
                 <a href="{{ route('user.logout') }}" onclick="deleteCookiesOnLogout()">
