@@ -30,28 +30,14 @@
                         <input type="text" id="phoneNumber" name="phoneNumber" value="{{ Auth::user()->phoneNumber }}"
                             class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
                     </div>
-                    <div class="mt-5 w-3/4">
+                    <div class="mt-5 w-3/4" id="addressMainCon">
                         @php
                             $showInput = true;
                         @endphp
                         @foreach ($data as $i => $address)
-                            @if ($address != null)
-                                <x-addressInput address='{{ $address }}' :index='$i + 1' />
-                                <div class="flex items-center justify-center ">
-                                    @if ($i > 0)
-                                        <a href="{{ route('user.deleteAddress', 'address' . ($i + 1)) }}">
-                                            <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
-                                        </a>
-                                    @endif
-                                </div>
-                            @else
-                                @if ($showInput)
-                                    <button type="button" id="butAd{{ $i + 1 }}" onclick="addAddressInput(this)"
-                                        class="border-2 rounded-xl border-Primary text-xl text-Primary font-bold p-2 hover:bg-Primary hover:text-white mt-5">Add
-                                        Address+</button>
-                                    {{ $showInput = false }}
-                                @endif
-                            @endif
+                            <x-addressInput address='{{ $address }}' :index='$i + 1' />
+                            <div class="flex items-center justify-center" id="addInputCon{{ $i + 1 }}">
+                            </div>
                         @endforeach
                     </div>
                     <div id="moreAddressCon" class="w-9/12">
@@ -68,6 +54,27 @@
     @endauth
 @endsection
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let addInputCon = document.getElementById("addInputCon");
+        let addressMainCon = document.getElementById("addressMainCon");
+        let countAddress = addressMainCon.querySelectorAll("div .address").length;
+        let inputAddress = addressMainCon.querySelectorAll('input')
+        let temp = 0;
+        for(let i =0; i< 4; i++){
+            if(inputAddress[i].value != "") temp ++;
+        }
+        if (countAddress >= 2) {
+            for (let i = 1; i <= countAddress; i++) {
+                let addInputCon = document.getElementById(`addInputCon${i}`);
+                let add = `address${i}`;
+                addInputCon.innerHTML += `
+            <a href="{{ route('user.deleteAddress', '') }}/${add}">
+                <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
+            </a>`;
+            }
+        }
+    });
+
     function addAddressInput(button) {
         let numbInput = button.id[5];
         let label =

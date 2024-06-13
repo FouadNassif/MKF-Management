@@ -4,7 +4,7 @@
 @error('address' . $index)
     <span class="text-red-600 font-bold ml-5">*{{ $message }}</span>
 @enderror
-<div class="flex items-center justify-center ">
+<div class="flex items-center justify-center address">
     <input type="text" id="address{{ $index }}" name="address{{ $index }}" value="{{ $address }}"
         class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
 </div>

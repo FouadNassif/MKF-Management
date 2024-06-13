@@ -84,17 +84,17 @@ class UserController extends Controller
             // check the name is unique and to check that the name is not the same so to pass the check
             // ( la yichuf iza ma 8ayr el user el esem la ma y3mil check 3al name)
             'name' => ['required', 'string', 'max:255', 'min:4', Rule::unique('users')->ignore(Auth::id()),],
-            'address1' => 'max:255|min:10',
-            'address2' => 'string|max:255|min:10|nullable',
-            'address3' => 'string|max:255|min:10|nullable',
-            'address4' => 'string|max:255|min:10|nullable',
+            'address1' => 'string|max:255|min:3|nullable',
+            'address2' => 'string|max:255|min:3|nullable',
+            'address3' => 'string|max:255|min:3|nullable',
+            'address4' => 'string|max:255|min:3|nullable',
         ]);
         $user = Auth::user();
-        
+
         if ($user) {
             // Update the name based on the userid
             User::where('id', $user->id)->update(['name' => $request->name]);
-        
+
             Address::where('user_id', $user->id)->update([
                 'address1' => $request->address1,
                 'address2' => $request->address2,
@@ -107,13 +107,16 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function deleteAddress(Request $request, $address){
-        if(Auth::check()){
+    public function deleteAddress(Request $request, $address)
+    {
+        // $t = Auth::user()->addresses()->get();
+        // dd($t[0]);
+        if (Auth::check()) {
             $deleted = Address::where('user_id', Auth::user()->id)->where($address, '!=', $address)->update([$address => null]);
-            if($deleted){
+            if ($deleted) {
                 session()->flash('status', 'Address deleted successfully');
                 return redirect()->back();
-            } else{
+            } else {
                 session()->flash('status', 'Something went wrong');
                 return redirect()->back();
             }
@@ -126,7 +129,8 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function showCart(){
+    public function showCart()
+    {
         $items = Item::get();
         return view("pages.User.cart", compact('items'));
     }

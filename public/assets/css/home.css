@@ -83,3 +83,11 @@ input::-webkit-inner-spin-button {
     padding: 5px;
     border-radius: 8px;
 }
+
+.itemCardCart > img {
+    width: 8rem;
+}
+
+.smallcartImg {
+    width: 1.5rem;
+}

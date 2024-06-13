@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->string('status');
+            //type
             $table->foreignId('cashier_id')->constrained("users");
+            //driver_id
             $table->integer("total")->unsigned();
             $table->timestamps();
         });

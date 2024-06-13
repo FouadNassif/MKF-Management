@@ -102,7 +102,7 @@ async function getAllItems() {
     document.getElementById("totalPrice").textContent = totalPrice.toFixed(2);
 }
 
-function emptyCart(){
+function emptyCart() {
     return `
     <div class="bg-white">
                     <img src="http://127.0.0.1:8000/assets/img/emptyCart.jpeg" alt="">
@@ -115,7 +115,7 @@ function showItemCartCard(item, quant) {
     let imageURL = item['imageURL'] ? `http://127.0.0.1:8000/storage/itemImage/${item['imageURL']}` : "";
     totalPrice += item['price'] * quant;
     return `
-        <div class="flex border-2 border-Primary p-2 rounded-xl mt-2 bg-white">
+        <div class="flex border-2 border-Primary p-2 rounded-xl mt-2 bg-white itemCardCart">
             <img src="${imageURL}" class="w-20 rounded-lg h-16">
             <div class="ml-5">
                 <p class="text-lg">${item['name']}
@@ -125,14 +125,14 @@ function showItemCartCard(item, quant) {
                 <div class="flex items-center h-fit">
                     <button class="text-Primary px-2 text-2xl" data-itemId="${item['id']}"
                         data-itemPrice="${item['price']}" onclick="decrement(this)" type="button"><img
-                            src="http://127.0.0.1:8000/assets/svg/Minus.svg" class="w-6"></button>
+                            src="http://127.0.0.1:8000/assets/svg/Minus.svg" class="w-6 smallcartImg"></button>
                     <input type="text" size="1" readonly class="outline-none text-center text-lg"
                         value="${quant}" id="inputItem${item['id']}">
                     <button class=" px-2" data-itemId="${item['id']}" data-itemPrice="${item['price']}"
                         onclick="increment(this)" type="button"><img src="http://127.0.0.1:8000/assets/svg/Plus.svg"
-                            class="w-6"></button>
+                            class="w-6 smallcartImg"></button>
                     <button onclick="deleteItemCart(${item['id']})" type="button"><img
-                            src="http://127.0.0.1:8000/assets/svg/Delete.svg" class="w-6"></button>
+                            src="http://127.0.0.1:8000/assets/svg/Delete.svg" class="w-6 smallcartImg"></button>
                     <p class=""> Total Price :<span id="totalPriceTxt${item['id']}">${(item['price'] * quant).toFixed(2)}</span>
                     </p>
                 </div>
@@ -277,6 +277,26 @@ function closeModal() {
     modalContainer.className = "";
     modalContainer.innerHTML = "";
 }
+
+function countCartItem() {
+    let cartItemsCounter = document.getElementById("cartItemsCounter");
+    if (JSON.parse(getCookie("Cart-item")).length >= 1) {
+        cartItemsCounter.textContent = JSON.parse(getCookie("Cart-item")).length;
+    } else {
+        cartItemsCounter.textContent = "0";
+    }
+}
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+countCartItem()
 
 document.getElementById('scrollLeft').addEventListener('click', function () {
     document.getElementById('categoryContainer').scrollBy({
