@@ -56,3 +56,10 @@ Route::get("/waiters", function () {
 
     return view('pages.Waiters.index');
 });
+Route::middleware("roles:admin,cashier,waiter")->group(function () {
+    // POS routes
+    Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
+    Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
+    Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
+    Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
+});
