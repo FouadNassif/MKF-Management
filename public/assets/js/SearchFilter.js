@@ -2,8 +2,9 @@ let itemSearchInp = document.getElementById("itemSearchInp");
 let itemContainer = document.getElementById("itemContainer");
 
 itemSearchInp.addEventListener('input', function () {
-    if (itemSearchInp.value == "") {
+    if (itemSearchInp.value.trim() == "" ) {
         getAllItems()
+        enableCategory()
     } else {
         SerachItem(itemSearchInp.value);
     }
@@ -28,6 +29,7 @@ async function SerachItem(txt) {
     }
 
     const items = await response.json();
+    disableCategory();
     updateItemContainer(items);
 }
 
@@ -53,7 +55,7 @@ async function getAllItems() {
     updateItemContainer(items);
 }
 
-async function searchByCategory(id) {
+async function searchByCategory(id, but) {
     const token = document
         .querySelector(`meta[name="csrf-token"]`)
         .getAttribute("content");
@@ -74,6 +76,8 @@ async function searchByCategory(id) {
     }
 
     const items = await response.json();
+    itemSearchInp.value = "";
+    removeSelectCategoryColor(but);
     updateItemContainer(items);
 }
 
@@ -107,7 +111,7 @@ function renderItems(item) {
 }
 
 function noResultFound() {
-    
+
     return ` 
     <div class='p-2 rounded-xl border-2 border-black w-96 m-5 min-h-90 max-h-90'>
             <img src='http://127.0.0.1:8000/assets/img/noresult.png' class='w-full h-48 object-cover'>
@@ -121,4 +125,28 @@ function noResultFound() {
                 <p>$0.00001</p>
             </div>
         </div>`
+}
+
+function removeSelectCategoryColor(but) {
+    let categoryContainer = document.getElementById("categoryContainer").querySelectorAll("button");
+    for (let buts of categoryContainer) {
+        buts.style.backgroundColor = '#649B92';
+    }
+    but.style.backgroundColor = '#527c75';
+}
+
+function disableCategory() {
+    let categoryContainer = document.getElementById("categoryContainer").querySelectorAll("button");
+    for (let buts of categoryContainer) {
+        buts.style.backgroundColor = 'gray';
+        buts.disabled = true;
+    }
+}
+
+function enableCategory() {
+    let categoryContainer = document.getElementById("categoryContainer").querySelectorAll("button");
+    for (let buts of categoryContainer) {
+        buts.disabled = false;
+        buts.style.backgroundColor = '#649B92';
+    }
 }

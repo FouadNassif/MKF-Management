@@ -11,7 +11,9 @@ class Order extends Model
 
     protected $fillable = [
         "status",
+        "type",
         "cashier_id",
+        "driver_id",
         "total"
     ];
 

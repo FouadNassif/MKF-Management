@@ -31,6 +31,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
 
+Route::post('/user/cart/placeOrder', [UserController::class, 'placeOrder'])->name('user.cart.placeOrder');
+
 // Category routes
 Route::get('/categories', [ItemCategoryController::class, "index"])->name("categories.index");
 Route::get('/categories/create', [ItemCategoryController::class, "create"])->name("categories.create");

@@ -21,7 +21,6 @@
                         <input type="text" id="name" name="name" value="{{ Auth::user()->name }}"
                             class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
                     </div>
-
                     <div class="mt-5 w-3/4">
                         <label for="phoneNumber" class="text-Primary font-medium text-xl">Phone Number</label>
                         @error('phoneNumber')
@@ -30,59 +29,126 @@
                         <input type="text" id="phoneNumber" name="phoneNumber" value="{{ Auth::user()->phoneNumber }}"
                             class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
                     </div>
+
                     <div class="mt-5 w-3/4" id="addressMainCon">
                         @php
                             $showInput = true;
+                            $count = 0;
                         @endphp
                         @foreach ($data as $i => $address)
-                            <x-addressInput address='{{ $address }}' :index='$i + 1' />
-                            <div class="flex items-center justify-center" id="addInputCon{{ $i + 1 }}">
-                            </div>
+                            @if ($address != null)
+                                @php
+                                    $count++;
+                                @endphp
+                                <div class="flex items-center justify-center align-center address"
+                                    id="addressContainer{{ $i + 1 }}">
+                                    <div class="flex flex-col w-full">
+                                        <label for="address{{ $i + 1 }}" class="text-Primary font-medium text-xl">Address
+                                            {{ $i + 1 }}</label>
+                                        <div class="flex items-center w-full">
+                                            <input type="text" id="address{{ $i + 1 }}"
+                                                name="address{{ $i + 1 }}" value="{{ $address }}"
+                                                class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
+                                            @if ($i > 0)
+                                                <a href="{{ route('user.deleteAddress', 'address' . ($i + 1)) }}">
+                                                    <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                            @if ($count == 4)
+                                @php
+                                    $showInput = false;
+                                @endphp
+                            @endif
                         @endforeach
                     </div>
-                    <div id="moreAddressCon" class="w-9/12">
-                    </div>
+                    <div id="moreAddressCon" class="w-9/12"></div>
+                    @if ($showInput)
+                        <button type="button" id="butAd" onclick="addAddressInput()"
+                            class="border-2 rounded-xl border-Primary text-xl text-Primary font-bold p-2 hover:bg-Primary hover:text-white mt-5">Add
+                            Address+</button>
+                    @endif
                     <div class="w-2/4 flex justify-center mt-5">
                         <button type="submit" class="text-white bg-Primary p-2 px-5 rounded-full text-xl w-1/4">Save</button>
                         <button type="reset"
                             class="text-Primary border-2 border-Primary p-2 px-5 rounded-full text-xl w-1/4">Cancel</button>
                     </div>
-
                 </form>
             </div>
         </div>
     @endauth
 @endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        let addInputCon = document.getElementById("addInputCon");
-        let addressMainCon = document.getElementById("addressMainCon");
-        let countAddress = addressMainCon.querySelectorAll("div .address").length;
-        let inputAddress = addressMainCon.querySelectorAll('input')
-        let temp = 0;
-        for(let i =0; i< 4; i++){
-            if(inputAddress[i].value != "") temp ++;
+
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDeleteLinks();
+        });
+
+        function updateDeleteLinks() {
+            let addressMainCon = document.getElementById("addressMainCon");
+            let addresses = addressMainCon.querySelectorAll("div.address");
+            let countAddress = addresses.length;
+
+            addresses.forEach((addressDiv, index) => {
+                let addressInputCon = addressDiv.querySelector('.flex.items-center.w-full');
+                let add = `address${index + 1}`;
+                let deleteLink = addressInputCon.querySelector('a');
+
+                if (countAddress > 1) {
+                    if (!deleteLink) {
+                        addressInputCon.innerHTML += `
+                        <a href="{{ route('user.deleteAddress', '') }}/${add}">
+                            <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
+                        </a>`;
+                    }
+                } else {
+                    if (deleteLink) {
+                        deleteLink.remove();
+                    }
+                }
+            });
         }
-        if (countAddress >= 2) {
-            for (let i = 1; i <= countAddress; i++) {
-                let addInputCon = document.getElementById(`addInputCon${i}`);
-                let add = `address${i}`;
-                addInputCon.innerHTML += `
-            <a href="{{ route('user.deleteAddress', '') }}/${add}">
-                <img src="{{ asset('assets/svg/DeleteLocation.svg') }}" class="w-12">
-            </a>`;
+
+        function addAddressInput() {
+            let addressMainCon = document.getElementById("addressMainCon");
+            let addresses = addressMainCon.querySelectorAll("div.address");
+            let currentCount = addresses.length;
+
+            if (currentCount < 4) {
+                let newIndex = currentCount + 1;
+                for (let i = 1; i <= 4; i++) {
+                    if (!document.getElementById(`address${i}`)) {
+                        newIndex = i;
+                        break;
+                    }
+                }
+
+                let newAddress = `
+                <div class="flex items-center justify-center align-center address" id="addressContainer${newIndex}">
+                    <div class="flex flex-col w-full">
+                        <label for="address${newIndex}" class="text-Primary font-medium text-xl">Address ${newIndex}</label>
+                        <div class="flex items-center w-full">
+                            <input type="text" id="address${newIndex}" name="address${newIndex}" placeholder="Add a new Address(minimum 10 characters)" class="w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2">
+                        </div>
+                    </div>
+                </div>`;
+
+                addressMainCon.innerHTML += newAddress;
+
+                if (currentCount + 1 == 4) {
+                    document.getElementById("butAd").style.display = 'none';
+                }
+
+                updateDeleteLinks();
             }
         }
-    });
 
-    function addAddressInput(button) {
-        let numbInput = button.id[5];
-        let label =
-            `<label for="address${numbInput}" class="text-Primary font-medium text-xl">Address${numbInput}</label>`
-        let input =
-            `<input name='address${numbInput}' type='text' placeholder='Add a new Address(minimum 10 characters)' class='w-full bg-transparent outline-0 cursor-pointer mt-4 border-2 rounded-xl border-Primary p-2'>`
-        let res = label + input;
-        document.getElementById("moreAddressCon").innerHTML = res;
-        console.log(document.getElementById("t").textContent)
-    }
-</script>
+        document.getElementById("butAd").addEventListener("click", () => {
+            document.getElementById("butAd").style.display = 'none';
+        });
+    </script>
+@endsection

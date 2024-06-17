@@ -280,10 +280,15 @@ function closeModal() {
 
 function countCartItem() {
     let cartItemsCounter = document.getElementById("cartItemsCounter");
-    if (JSON.parse(getCookie("Cart-item")).length >= 1) {
-        cartItemsCounter.textContent = JSON.parse(getCookie("Cart-item")).length;
+    let cartItems = JSON.parse(getCookie("Cart-item"));
+    if (cartItems) {
+        if (cartItems.length >= 1) {
+            cartItemsCounter.textContent = cartItems.length;
+        } else {
+            cartItemsCounter.textContent = "0";
+        }
     } else {
-        cartItemsCounter.textContent = "0";
+        cartItemsCounter.textContent = "";
     }
 }
 function getCookie(name) {
@@ -314,4 +319,34 @@ document.getElementById('scrollRight').addEventListener('click', function () {
     });
 });
 
+
+async function placeOrder() {
+    const token = document
+        .querySelector(`meta[name="csrf-token"]`)
+        .getAttribute("content");
+    const response = await fetch("/user/cart/placeOrder", {
+        method: "POST",
+        body: JSON.stringify({
+            cartItem: JSON.parse(getCookie("Cart-item")),
+        }),
+        headers: {
+            "X-CSRF-TOKEN": token,
+            "Content-type": "application/json",
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to checkout");
+    }
+
+    const placed = await response.json();
+    if(placed.Success){
+        deleteAllTheCart()
+        window.location.href = "/";
+    }
+}
+
+function deleteAllTheCart(){
+    document.cookie = "Cart-item" + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
 init();
