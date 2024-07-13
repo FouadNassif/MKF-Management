@@ -5,7 +5,16 @@
     </a>
     <div>
         @auth
-            <div class="flex items-center text-xl">
+            <div class="flex items-center text-xl gap-2">
+                @if (auth()->user()->role == 'admin')
+                    <a href="{{ route('admin.dashboard') }}" class="text-xl">Dashboard</a>
+                @endif
+                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'cashier')
+                    <a href="{{ route('pos.index') }}" class="text-xl">POS</a>
+                @endif
+                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'waiter')
+                    <a href="{{ route('waiter.index') }}" class="text-xl">Waiter</a>
+                @endif
                 <a href="{{ route('user.profile') }}" class="mx-5"><img src="{{ asset('assets/svg/ProfNav.svg') }}"
                         class="w-12" alt="Profile" title="profile"></a>
                 <a href="{{ route('user.logout') }}" onclick="deleteCookiesOnLogout()">

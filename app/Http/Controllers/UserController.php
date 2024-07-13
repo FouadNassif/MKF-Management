@@ -46,7 +46,7 @@ class UserController extends Controller
             'address1' => "required|string|min:1",
         ]);
 
-        // Add the credentials of the user to the database 
+        // Add the credentials of the user to the database
         $user = User::create([
             'name' => $request->name,
             'phoneNumber' => $request->phoneNumber,
@@ -54,7 +54,7 @@ class UserController extends Controller
             'role' => 'user',
         ]);
 
-        // Give the auth to the user 
+        // Give the auth to the user
         Auth::login($user);
 
         Address::create([
@@ -83,18 +83,18 @@ class UserController extends Controller
         $request->validate([
             // check the name is unique and to check that the name is not the same so to pass the check
             // ( la yichuf iza ma 8ayr el user el esem la ma y3mil check 3al name)
-            'name' => ['required', 'string', 'max:255', 'min:4', Rule::unique('users')->ignore(Auth::id()),],
+            'name' => ['required', 'string', 'max:255', 'min:4', Rule::unique('Users')->ignore(Auth::id()),],
             'address1' => 'max:255|min:10',
             'address2' => 'string|max:255|min:10|nullable',
             'address3' => 'string|max:255|min:10|nullable',
             'address4' => 'string|max:255|min:10|nullable',
         ]);
         $user = Auth::user();
-        
+
         if ($user) {
             // Update the name based on the userid
             User::where('id', $user->id)->update(['name' => $request->name]);
-        
+
             Address::where('user_id', $user->id)->update([
                 'address1' => $request->address1,
                 'address2' => $request->address2,

@@ -59,21 +59,23 @@ Route::middleware("roles:admin,cashier,waiter")->group(function () {
     Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
     Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
     Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
+
+    // Waiter routes
+    Route::get("/waiters", function () {
+
+        return view('pages.Waiters.index');
+    })->name('waiter.index');
 });
 
 
 //ADMIN routes
-Route::get('/admin', [dashboardController::class,'index'])->name('admin.dashboard');
-Route::get('/admin/customer', [CustomerController::class,'index'])->name('pages.admin.customer');
-Route::delete('/admin/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
-Route::get('/admin/driver', [DriverController::class,'index'])->name('pages.admin.driver');
-Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
-Route::get('/admin/waiter', [WaiterController::class,'index'])->name('pages.admin.waiter');
-Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
+Route::middleware("roles:admin")->group(function () {
 
-
-Route::get("/waiters", function () {
-
-    return view('pages.Waiters.index');
+    Route::get('/admin', [dashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/admin/customer', [CustomerController::class, 'index'])->name('pages.admin.customer');
+    Route::delete('/admin/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+    Route::get('/admin/driver', [DriverController::class, 'index'])->name('pages.admin.driver');
+    Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
+    Route::get('/admin/waiter', [WaiterController::class, 'index'])->name('pages.admin.waiter');
+    Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
 });
-
