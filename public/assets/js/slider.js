@@ -1,13 +1,14 @@
 const slides = document.querySelectorAll('.slide');
 const dotsContainer = document.querySelector('.dots');
-
 let slideIndex = 0;
 
 function showSlide(index) {
     slides.forEach((slide) => {
         slide.classList.remove('active');
+        slide.classList.add('opacity-0');
     });
     slides[index].classList.add('active');
+    slides[index].classList.remove('opacity-0');
 }
 
 function showDot(index) {

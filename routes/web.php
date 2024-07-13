@@ -10,6 +10,8 @@ use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
 
+use function PHPUnit\Framework\returnSelf;
+
 Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
 // Show the registration Form and Check the registration
@@ -20,12 +22,17 @@ Route::post('/register', [UserController::class, 'userRegister']);
 Route::get('/login', [UserController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UserController::class, 'login']);
 
+Route::post('/item/search', [ItemController::class, 'search'])->name('item.search');
+Route::post('/item/category', [ItemController::class, 'getItemsByCategory'])->name('item.category');
+
 Route::middleware('auth')->group(function () {
     // User routes
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::post('/getItems', [ItemController::class, 'getItems'])->name('item.getItemById');
     Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
+    Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
 
 // Category routes
@@ -42,7 +49,7 @@ Route::get('/items', [ItemController::class, "index"])->name("items.index");
 Route::get('/categories/{category}/item/create', [ItemController::class, "create"])->name("categories.items.create");
 Route::get('/items/{item}', [ItemController::class, "show"])->name("items.show");
 Route::get('/items/{item}/edit', [ItemController::class, "edit"])->name("items.edit");
-Route::post('/categories/{category}/items', [ItemController::class, "store"])->name("categories.items.store");
+Route::post('/item/creates', [ItemController::class, "store"])->name("categories.items.store");
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
 
@@ -63,4 +70,10 @@ Route::get('/admin/driver', [DriverController::class,'index'])->name('pages.admi
 Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
 Route::get('/admin/waiter', [WaiterController::class,'index'])->name('pages.admin.waiter');
 Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
+
+
+Route::get("/waiters", function () {
+
+    return view('pages.Waiters.index');
+});
 

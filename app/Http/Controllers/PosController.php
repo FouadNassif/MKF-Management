@@ -33,7 +33,6 @@ class PosController extends Controller
             ]);
         }
 
-
         return $order;
     }
 
