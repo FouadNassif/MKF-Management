@@ -1,10 +1,14 @@
 <?php
 
-use App\Http\Controllers\ItemCategoryController;
-use App\Http\Controllers\ItemController;
-use App\Http\Controllers\PosController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\DriverController;
+use App\Http\Controllers\Admin\WaiterController;
+use App\Http\Controllers\ItemCategoryController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\dashboardController;
 
 Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
@@ -49,3 +53,14 @@ Route::middleware("roles:admin,cashier,waiter")->group(function () {
     Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
     Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
 });
+
+
+//ADMIN routes
+Route::get('/admin', [dashboardController::class,'index'])->name('admin.dashboard');
+Route::get('/admin/customer', [CustomerController::class,'index'])->name('pages.admin.customer');
+Route::delete('/admin/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+Route::get('/admin/driver', [DriverController::class,'index'])->name('pages.admin.driver');
+Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
+Route::get('/admin/waiter', [WaiterController::class,'index'])->name('pages.admin.waiter');
+Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
+
