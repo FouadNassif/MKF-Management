@@ -12,8 +12,11 @@
                 @if (auth()->user()->role == 'admin' || auth()->user()->role == 'cashier')
                     <a href="{{ route('pos.index') }}" class="text-xl">POS</a>
                 @endif
-                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'waiter')
+                @if (auth()->user()->role == 'waiter')
                     <a href="{{ route('waiter.index') }}" class="text-xl">Waiter</a>
+                @endif
+                @if (auth()->user()->role == 'driver')
+                    <a href="{{ route('driver.index', ['id' => auth()->user()->id]) }}" class="text-xl">Driver</a>
                 @endif
                 <a href="{{ route('user.profile') }}" class="mx-5"><img src="{{ asset('assets/svg/ProfNav.svg') }}"
                         class="w-12" alt="Profile" title="profile"></a>

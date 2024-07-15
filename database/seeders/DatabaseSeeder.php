@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Item;
+use App\Models\ItemCategory;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -19,5 +21,7 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+        ItemCategory::factory(20)->create();
+        Item::factory(50)->create();
     }
 }
