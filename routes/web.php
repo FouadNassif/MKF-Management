@@ -10,6 +10,7 @@ use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Models\Order;
+use App\Http\Controllers\WaitersController;
 
 
 Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
@@ -62,11 +63,13 @@ Route::middleware("roles:admin,cashier,waiter")->group(function () {
     Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
     Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
 
-    // Waiter routes
-    Route::get("/waiters", function () {
+});
 
-        return view('pages.Waiters.index');
-    })->name('waiter.index');
+Route::middleware("roles:waiter")->group(function () {
+Route::get('/waiters', [WaitersController::class, 'getAllOrder'])->name('waiters.homepage');
+Route::post('/waiters/getAllOrder', [WaitersController::class, 'getAllOrderJS'])->name('waiters.allOrders');
+Route::post('/waiter/getOrderById', [WaitersController::class, "getOrderById"])->name('waiters.getOrderById');
+Route::post('/waiter/saveEditedOrder', [WaitersController::class, "saveEditedOrder"])->name('waiters.getOrderById');
 });
 
 Route::middleware("roles:admin,driver")->group(function () {
