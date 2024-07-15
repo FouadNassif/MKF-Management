@@ -73,7 +73,7 @@ async function expandOrder(orderId) {
     let htmlCode = `
             <div class="flex justify-between">
                 <p>Order ID: ${orderId}</p>
-                <button class="py-1 px-3 bg-Primary text-white rounded-xl">Add Item</button>
+                <button class="py-1 px-3 bg-Primary text-white rounded-xl" onclick="goToPOS(${orderId})">POS</button>
             </div>
             <div class="text-Primary flex justify-between">
                 <div class="text-center border-r-2 border-b-2 border-S w-full">Item Name</div>
@@ -204,6 +204,24 @@ function addOrderToWaiterOrCheckout(orderId) {
         addOrderToWaiter(orderId);
         window.location.href = "/waiters";
     }
+}
+
+async function goToPOS(orderId) {
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const response = await fetch('/waiter/to-pos', {
+        method: 'POST',
+        body: JSON.stringify({ orderId: orderId }),
+        headers: {
+            'X-CSRF-TOKEN': token,
+            'Content-type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to checkout');
+    }
+
+    window.location.href = "/pos"
 }
 
 function renderActiveWaitersOrders(orderId, order, borderColor) {

@@ -60,4 +60,9 @@ class WaitersController extends Controller
             }
         }
     }
+    public function waiterToPos(Request $request)
+    {
+        $body = $request->all();
+        session()->flash('orderId', $body['orderId']);
+    }
 }

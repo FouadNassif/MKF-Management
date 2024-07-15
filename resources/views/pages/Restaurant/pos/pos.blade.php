@@ -8,6 +8,11 @@
 
 @section('content')
     @include('partials._navbar')
+    @if (session('orderId'))
+        <h1>Order ID: {{ session('orderId') }}</h1>
+    @else
+        <h1>No Order ID Found</h1>
+    @endif
     <div class="p-4 flex gap-4 overflow-x-auto" style="height: calc(100vh - 80px)">
         <div class="min-w-[550px] w-[60vw] flex flex-col gap-2">
             {{-- Categories --}}

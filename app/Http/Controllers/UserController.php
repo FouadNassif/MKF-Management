@@ -53,7 +53,7 @@ class UserController extends Controller
             'name' => $request->name,
             'phoneNumber' => $request->phoneNumber,
             'password' => bcrypt($request->password),
-            'role' => 'user',
+            'role' => 'customer',
         ]);
 
         // Give the auth to the user

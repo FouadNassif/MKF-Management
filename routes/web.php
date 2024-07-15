@@ -62,14 +62,13 @@ Route::middleware("roles:admin,cashier,waiter")->group(function () {
     Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
     Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
     Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
-
 });
 
 Route::middleware("roles:waiter")->group(function () {
-Route::get('/waiters', [WaitersController::class, 'getAllOrder'])->name('waiters.homepage');
-Route::post('/waiters/getAllOrder', [WaitersController::class, 'getAllOrderJS'])->name('waiters.allOrders');
-Route::post('/waiter/getOrderById', [WaitersController::class, "getOrderById"])->name('waiters.getOrderById');
-Route::post('/waiter/saveEditedOrder', [WaitersController::class, "saveEditedOrder"])->name('waiters.getOrderById');
+    Route::get('/waiters', [WaitersController::class, 'getAllOrder'])->name('waiter.index');
+    Route::post('/waiters/getAllOrder', [WaitersController::class, 'getAllOrderJS'])->name('waiters.allOrders');
+    Route::post('/waiter/getOrderById', [WaitersController::class, "getOrderById"])->name('waiters.getOrderById');
+    Route::post('/waiter/saveEditedOrder', [WaitersController::class, "saveEditedOrder"])->name('waiters.getOrderById');
 });
 
 Route::middleware("roles:admin,driver")->group(function () {
@@ -85,6 +84,7 @@ Route::middleware("roles:admin,driver")->group(function () {
     })->name('driver.index');
 });
 
+Route::post('/waiter/to-pos', [WaitersController::class, 'waiterToPos'])->name('waiter.toPos');
 
 //ADMIN routes
 Route::middleware("roles:admin")->group(function () {

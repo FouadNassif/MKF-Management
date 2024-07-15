@@ -1,6 +1,6 @@
 @props(['item'])
 <div class='p-2 rounded-xl border-2 border-black w-96 m-5 min-h-90 max-h-90 '>
-    <img src='{{ $item->imageURL ? $item->imageURL : asset('assets/img/burger.jpeg') }}'>
+    <img src='{{$item->imageURL}}'>
     <h1 class='font-bold text-xl'>{{ $item->name }}</h1>
     <p class='text-gray-400 min-h-24 max-h-24 overflow-hidden text-ellipsis'>
         {{ $item->description }}</p>
