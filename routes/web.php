@@ -5,6 +5,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WaitersController;
 
 use function PHPUnit\Framework\returnSelf;
 
@@ -57,10 +58,11 @@ Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
 Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
 Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
 
-Route::get("/waiters", function () {
+Route::get('/waiters', [WaitersController::class, 'getAllOrder'])->name('waiters.homepage');
+Route::post('/waiters/getAllOrder', [WaitersController::class, 'getAllOrderJS'])->name('waiters.allOrders');
+Route::post('/waiter/getOrderById', [WaitersController::class, "getOrderById"])->name('waiters.getOrderById');
+Route::post('/waiter/saveEditedOrder', [WaitersController::class, "saveEditedOrder"])->name('waiters.getOrderById');
 
-    return view('pages.Waiters.index');
-});
 Route::middleware("roles:admin,cashier,waiter")->group(function () {
     // POS routes
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
