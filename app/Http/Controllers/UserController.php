@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Address;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -107,13 +109,16 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function deleteAddress(Request $request, $address){
-        if(Auth::check()){
+    public function deleteAddress(Request $request, $address)
+    {
+        // $t = Auth::user()->addresses()->get();
+        // dd($t[0]);
+        if (Auth::check()) {
             $deleted = Address::where('user_id', Auth::user()->id)->where($address, '!=', $address)->update([$address => null]);
-            if($deleted){
+            if ($deleted) {
                 session()->flash('status', 'Address deleted successfully');
                 return redirect()->back();
-            } else{
+            } else {
                 session()->flash('status', 'Something went wrong');
                 return redirect()->back();
             }
@@ -126,8 +131,44 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function showCart(){
+    public function showCart()
+    {
         $items = Item::get();
         return view("pages.User.cart", compact('items'));
+    }
+
+    public function placeOrder(Request $request)
+    {
+        $body = $request->all();
+        $items = $body["cartItem"];
+        $total = 0;
+
+        foreach ($items as $item) {
+            $price = Item::where('id', $item[0])->value('price');
+            $quantity = $item[1];
+            $total += (float) ($price * $quantity);
+        }
+
+        $order = Order::create([
+            "cashier_id" => Auth::id(),
+            "driver_id" => Auth::id(),
+            "type" => 'Delivery',
+            "status" => "Ongoing",
+            "total" => $total
+        ]);
+
+        foreach ($items as $item) {
+            OrderItem::create([
+                "order_id" => $order["id"],
+                "quantity" => $item[1],
+                "item_id" => $item[0],
+            ]);
+        }
+
+        if ($order) {
+            return response()->json(["Success" => true]);
+        } else {
+            return response()->json(["Success" => false]);
+        }
     }
 }

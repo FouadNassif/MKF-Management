@@ -11,7 +11,6 @@ use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Models\Order;
 
-use function PHPUnit\Framework\returnSelf;
 
 Route::get('/', [ItemController::class, 'homePage'])->name('restaurant.homePage');
 
@@ -35,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
     Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
+
+Route::post('/user/cart/placeOrder', [UserController::class, 'placeOrder'])->name('user.cart.placeOrder');
 
 // Category routes
 Route::get('/categories', [ItemCategoryController::class, "index"])->name("categories.index");

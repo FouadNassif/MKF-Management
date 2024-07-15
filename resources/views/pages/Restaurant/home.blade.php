@@ -4,6 +4,16 @@
 
 @section('content')
     @include('partials._navbar')
+    @auth
+        @php
+            $loggedIn = true;
+        @endphp
+    @endauth
+    @guest
+        @php
+            $loggedIn = false;
+        @endphp
+    @endguest
     <link rel="stylesheet" href="{{ asset('assets/css/home.css') }}">
     <div class="relative">
         <div id="cart"
@@ -13,14 +23,14 @@
                     class="fixed top-1/2 -left-12 transform -translate-y-1/2 bg-PrimaryD text-white p-3 rounded-l-lg z-50">
                     <img id="butImgCart" src="{{ asset('assets/svg/CartOpen.svg') }}" class="w-10">
                     <span id="cartItemsCounter"
-                        class="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2 bg-cyan-950 text-2xl px-3 rounded-full text-white">0</span>
+                        class="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2 bg-cyan-950 text-2xl px-3 rounded-full text-white"></span>
                 </button>
             </div>
 
             <div class="flex-grow overflow-y-auto" id="test">
             </div>
             <div class="flex w-full justify-center">
-                <button type="button" class="flex justify-between bg-Primary p-2 rounded-lg px-4 w-2/4 text-white text-xl">
+                <button type="button" class="flex justify-between bg-Primary p-2 rounded-lg px-4 w-2/4 text-white text-xl" onclick="placeOrder()">
                     <p>Checkout</p>
                     <p id="totalPrice"></p>
                 </button>
@@ -41,7 +51,7 @@
                 @foreach ($categories as $category)
                     <button
                         class="bg-Secondary rounded-xl text-xl mx-5 py-3 px-4 text-white text-center min-w-[100px] hover:bg-SecondaryH"
-                        onclick="searchByCategory('{{ $category->id }}')">
+                        onclick="searchByCategory('{{ $category->id }}', this)">
                         {{ $category->name }}
                     </button>
                 @endforeach
@@ -57,7 +67,7 @@
             @endforeach
         </div>
         <div id="modalCon">
-            
+
         </div>
     </div>
 @endsection
