@@ -23,7 +23,8 @@ class PosController extends Controller
         $order = Order::create([
             "cashier_id" => Auth::id(),
             "status" => "Not Payed",
-            "total" => $total
+            "total" => $total,
+            "type" => "DineIn"
         ]);
         foreach ($items as $item) {
             OrderItem::create([

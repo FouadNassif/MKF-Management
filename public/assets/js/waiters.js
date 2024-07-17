@@ -18,33 +18,27 @@ async function getAllOrders() {
 
     const orders = await response.json();
     let htmlCodeActive = "";
-    let htmlCodeInactive = "";
-
-    let waiterOrdersCookie = JSON.parse(getCookie("Waiter-Orders"));
-
-    if (waiterOrdersCookie && waiterOrdersCookie.length >= 1) {
-        // Render active orders
-        waiterOrdersCookie.forEach(orderId => {
-            let order = orders.find(order => order.id === orderId);
-            if (order) {
-                htmlCodeActive += renderActiveWaitersOrders(orderId, order, "border-Primary");
-            }
-        });
-        // Render inactive orders
+    if (orders.length >= 1) {
         orders.forEach(order => {
-            if (!waiterOrdersCookie.includes(order.id)) {
-                htmlCodeInactive += renderActiveWaitersOrders(order.id, order, "border-Danger");
-            }
-        });
 
-    } else {
-        // if the cookies is empty
-        orders.forEach(order => {
-            htmlCodeInactive += renderActiveWaitersOrders(order.id, order, "border-Danger");
+            if (order.items.length >= 1) {
+                htmlCodeActive += renderActiveWaitersOrders(order.id, order);
+            }
         });
     }
+    document.getElementById("allOrder").innerHTML = htmlCodeActive;
+}
 
-    document.getElementById("allOrder").innerHTML = htmlCodeActive + htmlCodeInactive;
+function renderActiveWaitersOrders(orderId, order) {
+    let code = `
+     <div class="flex justify-between w-11/12 p-5 border-Primary rounded-xl border-2 mt-3" id=${orderId}>
+                <p>${orderId}</p><div class="flex">`;
+    for (let i = 0; i < order.items.length; i++) {
+        code += `<p class="mx-1">${order.items[i].item['name']}</p>`
+    }
+    code += `</div><button onclick="expandOrder(${orderId})"><img src="${svgURl + "ArrowUp.svg"}" class="w-8 rotate-180"></button>
+            </div>`;
+    return code;
 }
 
 
@@ -64,11 +58,11 @@ async function expandOrder(orderId) {
     }
 
     const items = await response.json();
+
     let orderContainer = document.getElementById(orderId);
     orderContainer.innerHTML = '';
-    let borderColor = orderContainer.className.includes('border-Danger') ? 'border-Danger' : 'border-Primary'
     orderContainer.className = ''
-    orderContainer.className = `border-2 ${borderColor} p-4 rounded-xl w-11/12 mt-3`
+    orderContainer.className = `border-2 border-Primary p-4 rounded-xl w-11/12 mt-3`
 
     let htmlCode = `
             <div class="flex justify-between">
@@ -107,7 +101,7 @@ async function expandOrder(orderId) {
     htmlCode += `
             </div>
             <div class="flex float-right mt-5">
-                <button class="bg-Primary rounded-lg py-2 px-5 text-white" onclick="addOrderToWaiterOrCheckout(${orderId})">Checkout</button>
+                <button class="bg-Primary rounded-lg py-2 px-5 text-white" onclick="checkout(${orderId})">Checkout</button>
                 <button class="mx-5" onclick="collapseOrder(${orderId}, '${Names}', this)"><img class="w-8" src="${svgURl + 'ArrowUp.svg'}" alt=""></button>
             </div>
         `;
@@ -165,10 +159,13 @@ function showEditModal(itemName, itemQuan, orderId, itemId) {
                     Item Name: ${itemName}
                 </div>
                 <div class="my-3">
-                    Item Quantity: <input type="number" id="itemQuan" value="${itemQuan}" required class="border border-gray-300 rounded-md p-1">
+                    Item Quantity: 
+                    <button onclick="decrement()" class="bg-Primary text-white px-2">-</button>
+                    <input type="number" size="1" id="itemQuan" value="${itemQuan}" required class="border outline-none border-gray-300 w-fit rounded-md p-1" readonly>
+                    <button onclick="increment()" class="bg-Primary text-white px-2">+</button>
                 </div>
-                <div class="flex justify-between mt-4">
-                    <button class="bg-red-500 text-white p-2 rounded-xl">Delete</button>
+                <div class="flex justify-between mt-4 waitBut">
+                    <button class="bg-red-500 text-white p-2 rounded-xl" onclick="deleteItem(${itemId}, ${orderId}, '${itemName}')">Delete</button>
                     <button class="bg-green-500 text-white p-2 rounded-xl" onclick="saveEditedItem(${orderId}, ${itemId})">Save</button>
                     <button class="bg-blue-500 text-white p-2 rounded-xl" onclick="closeModal()">Close</button>
                 </div>
@@ -197,12 +194,30 @@ function collapseOrder(containerId, itemName, button) {
     button.parentNode.innerHTML = ""
 }
 
-function addOrderToWaiterOrCheckout(orderId) {
-    let orderContainer = document.getElementById(orderId);
-    let borderColor = orderContainer.className.includes('border-Danger') ? 'border-Danger' : 'border-Primary'
-    if (borderColor == 'border-Danger') {
-        addOrderToWaiter(orderId);
-        window.location.href = "/waiters";
+async function deleteItem(itemId, orderId, itemName) {
+    const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const response = await fetch('/waiter/deleteItem', {
+        method: 'POST',
+        body: JSON.stringify({ itemId: itemId, orderId: orderId }),
+        headers: {
+            'X-CSRF-TOKEN': token,
+            'Content-type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Failed to checkout', response.Error);
+    }
+
+    const deleted = await response.json();
+    if (deleted.deleted == "true") {
+        const paragraphs = document.querySelectorAll('p');
+        paragraphs.forEach(paragraph => {
+            if (paragraph.textContent.trim() === itemName) {
+                paragraph.parentElement.parentElement.remove()
+                closeModal()
+            }
+        });
     }
 }
 
@@ -224,65 +239,19 @@ async function goToPOS(orderId) {
     window.location.href = "/pos"
 }
 
-function renderActiveWaitersOrders(orderId, order, borderColor) {
-    let code = `
-     <div class="flex justify-between w-11/12 p-5 ${borderColor} rounded-xl border-2 mt-3" id=${orderId}>
-                <p>${orderId}</p><div class="flex">`;
-    for (let i = 0; i < order.items.length; i++) {
-        code += `<p class="mx-1">${order.items[i].item['name']}</p>`
+function checkout(orderId) {
+    window.location.href = `/pos/payment?order_id=${orderId}`
+}
+getAllOrders()
+
+function increment() {
+    let itemQuan = document.getElementById("itemQuan");
+    itemQuan.value++;
+}
+
+function decrement() {
+    let itemQuan = document.getElementById("itemQuan");
+    if (itemQuan.value > 1) {
+        itemQuan.value--;
     }
-    code += `</div><button onclick="expandOrder(${orderId})"><img src="${svgURl + "ArrowUp.svg"}" class="w-8 rotate-180"></button>
-            </div>`;
-    return code;
 }
-
-function addOrderToWaiter(orderId) {
-    addOrUpdateCartItem("Waiter-Orders", orderId);
-}
-
-
-function init() {
-    if (!getCookie("Waiter-Orders")) {
-        setCookie("Waiter-Orders", JSON.stringify([]), 90); // Expire after 90 Dasys
-    }
-    getAllOrders()
-}
-
-
-
-function setCookie(name, value, days) {
-    let expires = "";
-    if (days) {
-        const date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-}
-
-function getCookie(name) {
-    const nameEQ = name + "=";
-    const ca = document.cookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
-        let c = ca[i];
-        while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-}
-
-function addOrUpdateCartItem(cookieName, orderId) {
-    let existingData = getCookie(cookieName);
-    let cartItems = existingData ? JSON.parse(existingData) : [];
-
-    const index = cartItems.findIndex(item => item === orderId);
-
-    if (index !== -1) {
-        return;
-    } else {
-        cartItems.push(orderId);
-    }
-    setCookie(cookieName, JSON.stringify(cartItems), 90);
-}
-
-init()

@@ -8,14 +8,17 @@
     font-size: 1.5rem;
 }
 
-.editItemModal button:nth-child(1) {
+.waitBut button:nth-child(1) {
     background-color: #ef4444;
 }
 
-.editItemModal button:nth-child(2) {
+.editItemModal input {
+    size: 1;
+}
+.waitBut button:nth-child(2) {
     background-color: #22c55e;
 }
 
-.editItemModal button:nth-child(3) {
+.waitBut button:nth-child(3) {
     background-color: #3b82f6;
 }

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->foreignId('cashier_id')->nullable()->constrained("Users");
             $table->foreignId('driver_id')->nullable()->constrained("Users");
+            $table->foreignId('waiter_id')->nullable()->constrained("Users");
             $table->integer("total")->unsigned();
             $table->timestamps();
         });

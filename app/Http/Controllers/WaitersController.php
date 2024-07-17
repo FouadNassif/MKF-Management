@@ -6,6 +6,7 @@ use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WaitersController extends Controller
 {
@@ -17,7 +18,8 @@ class WaitersController extends Controller
 
     public function getAllOrderJS()
     {
-        $orders = Order::where("type", "DineIn")->with('items.item')->get();
+
+        $orders = Order::where("type", "DineIn")->where("waiter_id", Auth::id())->with('items.item')->get();
 
         return $orders;
     }
@@ -64,5 +66,18 @@ class WaitersController extends Controller
     {
         $body = $request->all();
         session()->flash('orderId', $body['orderId']);
+    }
+
+    function deleteItem(Request $request)
+    {
+        $body = $request->all();
+        if (isset($body['orderId']) && isset($body['itemId'])) {
+            $itemDeleted = OrderItem::where('order_id', $body['orderId'])->where('item_id', $body['itemId'])->delete();
+            if ($itemDeleted) {
+                return response()->json(['deleted' => 'true']);
+            } else {
+                return response()->json(['deleted' => 'false']);
+            }
+        }
     }
 }
