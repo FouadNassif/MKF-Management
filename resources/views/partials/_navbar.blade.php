@@ -9,7 +9,7 @@
                 @if (auth()->user()->role == 'admin')
                     <a href="{{ route('admin.dashboard') }}" class="text-xl">Dashboard</a>
                 @endif
-                @if (auth()->user()->role == 'admin' || auth()->user()->role == 'cashier')
+                @if (auth()->user()->role == 'cashier')
                     <a href="{{ route('pos.index') }}" class="text-xl">POS</a>
                 @endif
                 @if (auth()->user()->role == 'waiter')

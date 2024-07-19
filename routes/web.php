@@ -9,7 +9,7 @@ use App\Http\Controllers\Admin\WaiterController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
-use App\Models\Order;
+use App\Http\Controllers\DriverController as ControllersDriverController;
 use App\Http\Controllers\WaitersController;
 
 
@@ -73,16 +73,7 @@ Route::middleware("roles:waiter")->group(function () {
 });
 
 Route::middleware("roles:admin,driver")->group(function () {
-    Route::get('/driver/{id}', function ($id) {
-
-        if (auth()->user()->role != 'admin' && auth()->user()->id != $id) {
-            abort(403, 'Unauthorized action.');
-        }
-
-        $orders = Order::get()->where('driver_id', '==', auth()->user()->id);
-        // dd($orders[0]['items'][0]['item']);
-        return view('pages.Restaurant.driver', ['orders' => $orders]);
-    })->name('driver.index');
+    Route::get('/driver/{id}', [ControllersDriverController::class, 'index'])->name('driver.index');
 });
 
 Route::post('/waiter/to-pos', [WaitersController::class, 'waiterToPos'])->name('waiter.toPos');
