@@ -143,6 +143,7 @@ async function saveEditedItem(orderId, itemId) {
     if (!response.ok) {
         throw new Error('Failed to checkout');
     }
+    document.getElementById("itemQuan").value = newQuantity;
     closeModal()
     document.getElementById(`${itemId}quan`).textContent = newQuantity;
 }
