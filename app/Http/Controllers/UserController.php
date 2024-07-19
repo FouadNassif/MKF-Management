@@ -150,8 +150,10 @@ class UserController extends Controller
         }
 
         $order = Order::create([
-            "cashier_id" => Auth::id(),
-            "driver_id" => Auth::id(),
+            "cashier_id" => null,
+            "driver_id" => null,
+            "waiter_id" => null,
+            "client_id" => Auth::id(),
             "type" => 'Delivery',
             "status" => "Ongoing",
             "total" => $total

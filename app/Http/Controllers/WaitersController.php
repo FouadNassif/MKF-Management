@@ -12,7 +12,7 @@ class WaitersController extends Controller
 {
     public function getAllOrder(Request $request)
     {
-        $orders = Order::where("type", "DineIn")->with('items.item')->get();
+        $orders = Order::where("type", "DineIn")->where("waiter_id", Auth::id())->with('items.item')->get();
         return view('pages.Waiters.index', compact('orders'));
     }
 
