@@ -26,6 +26,17 @@
                 }
                 const updated = await response.json();
                 if (updated.status) {
+                    @if (session('from'))
+                        @if (session('from') === 'driver')
+                            window.location.href = "/driver/";
+                            return
+                        @endif
+
+                        @if (session('from') === 'waiter')
+                            window.location.href = "/waiters/";
+                            return
+                        @endif
+                    @endif
                     window.location.href = "/pos/";
                 } else {
                     throw new Error("Payment Failed: Internal Server Error");

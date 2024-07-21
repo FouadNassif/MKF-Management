@@ -56,12 +56,10 @@ Route::post('/item/creates', [ItemController::class, "store"])->name("categories
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
 Route::put('/items/{item}', [ItemController::class, "update"])->name("items.update");
 
-Route::middleware("roles:admin,cashier,waiter")->group(function () {
+Route::middleware("roles:cashier,waiter")->group(function () {
     // POS routes
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
-    Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
-    Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
 });
 
 Route::middleware("roles:waiter")->group(function () {
@@ -72,11 +70,16 @@ Route::middleware("roles:waiter")->group(function () {
     Route::post('/waiter/deleteItem', [WaitersController::class, "deleteItem"])->name('waiters.deleteItem');
 });
 
-Route::middleware("roles:admin,driver")->group(function () {
-    Route::get('/driver/{id}', [ControllersDriverController::class, 'index'])->name('driver.index');
+Route::middleware("roles:driver")->group(function () {
+    Route::get('/driver/', [ControllersDriverController::class, 'index'])->name('driver.index');
+    Route::get('/driver/checkout/{order}', [ControllersDriverController::class, 'goToCheckout'])->name('driver.checkout');
+    Route::get('/driver/deliver/{order}', [ControllersDriverController::class, 'deliverOrder'])->name('driver.deliver');
 });
 
 Route::post('/waiter/to-pos', [WaitersController::class, 'waiterToPos'])->name('waiter.toPos');
+
+Route::get('/pos/payment', [PosController::class, 'payment'])->name('pos.payment.index');
+Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.payment.store');
 
 //ADMIN routes
 Route::middleware("roles:admin")->group(function () {
