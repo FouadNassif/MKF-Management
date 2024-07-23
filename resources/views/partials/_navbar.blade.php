@@ -16,7 +16,7 @@
                     <a href="{{ route('waiter.index') }}" class="text-xl">Waiter</a>
                 @endif
                 @if (auth()->user()->role == 'driver')
-                    <a href="{{ route('driver.index', ['id' => auth()->user()->id]) }}" class="text-xl">Driver</a>
+                    <a href="{{ route('driver.index') }}" class="text-xl">Driver</a>
                 @endif
                 <a href="{{ route('user.profile') }}" class="mx-5"><img src="{{ asset('assets/svg/ProfNav.svg') }}"
                         class="w-12" alt="Profile" title="profile"></a>

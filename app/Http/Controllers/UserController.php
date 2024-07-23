@@ -151,7 +151,7 @@ class UserController extends Controller
             "cashier_id" => null,
             "driver_id" => null,
             "waiter_id" => null,
-            "client_id" => Auth::id(),
+            "customer_id" => Auth::id(),
             "type" => 'Delivery',
             "status" => "Ongoing",
             "total" => $total

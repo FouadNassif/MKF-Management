@@ -8,19 +8,13 @@ use Illuminate\Support\Facades\Auth;
 
 class DriverController extends Controller
 {
-    function index($id)
+    function index()
     {
-
-        if (auth()->user()->role != 'admin' && auth()->user()->id != $id) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $orders = Order::get()->where('type', '==', 'Delivery');
-        dd($orders[0]['items'][0]['item']);
-        return view('pages.Restaurant.driver', ['orders' => $orders]);
+        return view('pages.Restaurant.driver', ['orders' => $orders, 'auth_id' => Auth::user()->id]);
     }
 
-    function takeOrder(Order $order)
+    function deliverOrder(Order $order)
     {
         $order->update([
             'driver_id' => Auth::user()->id
@@ -28,6 +22,11 @@ class DriverController extends Controller
 
         $orders = Order::get()->where('type', '==', 'Delivery');
 
-        return view('pages.admin.driver', ['orders' => $orders]);
+        return redirect()->route('driver.index');
+    }
+
+    function goToCheckout(Order $order)
+    {
+        return redirect()->route('pos.payment.index', ['order_id'=> $order->id])->with('from', 'driver');
     }
 }
