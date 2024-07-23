@@ -7,7 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\WaiterController;
 use App\Http\Controllers\ItemCategoryController;
-use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Models\Order;
 use App\Http\Controllers\WaitersController;
@@ -90,10 +89,12 @@ Route::post('/waiter/to-pos', [WaitersController::class, 'waiterToPos'])->name('
 Route::middleware("roles:admin")->group(function () {
 
     Route::get('/admin', [dashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/customer', [CustomerController::class, 'index'])->name('pages.admin.customer');
-    Route::delete('/admin/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
-    Route::get('/admin/driver', [DriverController::class, 'index'])->name('pages.admin.driver');
-    Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
-    Route::get('/admin/waiter', [WaiterController::class, 'index'])->name('pages.admin.waiter');
-    Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
+    Route::get('/admin/customer', [dashboardController::class, 'getCustomers'])->name('pages.admin.customer');
+    Route::delete('/admin/customer/{id}', [dashboardController::class, 'destroyCustomers'])->name('customer.destroy');
+    Route::get('/admin/driver', [dashboardController::class, 'getDrivers'])->name('pages.admin.driver');
+    Route::delete('/admin/driver/{id}', [dashboardController::class, 'destroyDrivers'])->name('driver.destroy');
+    Route::get('/admin/waiter', [dashboardController::class, 'getWaiters'])->name('pages.admin.waiter');
+    Route::delete('/admin/waiter/{id}', [dashboardController::class, 'destroyWaiters'])->name('waiter.destroy');
+    Route::get('/admin/orders', [dashboardController::class, 'getOrders'])->name('pages.admin.orders');
+    Route::get('/admin/menuItems', [dashboardController::class, 'getMenuItems'])->name('pages.admin.menuItems');
 });
