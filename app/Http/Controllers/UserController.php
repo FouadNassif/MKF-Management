@@ -83,8 +83,6 @@ class UserController extends Controller
     public function updateProfile(Request $request)
     {
         $request->validate([
-            // check the name is unique and to check that the name is not the same so to pass the check
-            // ( la yichuf iza ma 8ayr el user el esem la ma y3mil check 3al name)
             'name' => ['required', 'string', 'max:255', 'min:4', Rule::unique('Users')->ignore(Auth::id()),],
             'address1' => 'max:255|min:10',
             'address2' => 'string|max:255|min:10|nullable',
