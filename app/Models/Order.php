@@ -15,6 +15,7 @@ class Order extends Model
         "cashier_id",
         "driver_id",
         "customer_id",
+        'waiter_id',
         "total"
     ];
 

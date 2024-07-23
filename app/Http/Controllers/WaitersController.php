@@ -80,4 +80,16 @@ class WaitersController extends Controller
             }
         }
     }
+
+    function createOrder()
+    {
+        $order = Order::create([
+            'status' => 'Ongoing',
+            'type' => 'DineIn',
+            'waiter_id' => Auth::id(),
+            'total' => 0
+        ]);
+
+        return redirect()->route('waiter.index');
+    }
 }
