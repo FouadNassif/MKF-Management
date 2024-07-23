@@ -340,13 +340,16 @@ async function placeOrder() {
     }
 
     const placed = await response.json();
-    if(placed.Success){
+    if (placed.login) {
+        window.location.href = "/login";
+    }
+    if (placed.Success) {
         deleteAllTheCart()
         window.location.href = "/";
     }
 }
 
-function deleteAllTheCart(){
+function deleteAllTheCart() {
     document.cookie = "Cart-item" + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
 init();

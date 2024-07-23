@@ -137,6 +137,10 @@ class UserController extends Controller
 
     public function placeOrder(Request $request)
     {
+        if(!Auth::check()){
+            session()->flash('status', 'Please Login | Sign up to Checkout!');
+            return response()->json(["login" => true]);
+        }
         $body = $request->all();
         $items = $body["cartItem"];
         $total = 0;
@@ -166,8 +170,10 @@ class UserController extends Controller
         }
 
         if ($order) {
+            session()->flash('status', 'Your order has been placed Successfully!');
             return response()->json(["Success" => true]);
         } else {
+            session()->flash('status', 'Something went Wrong!');
             return response()->json(["Success" => false]);
         }
     }

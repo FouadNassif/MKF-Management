@@ -12,7 +12,6 @@ function addItemToCart(ref) {
     const id = ref.getAttribute("data-itemId");
     let itemQuantity = document.getElementById("item-quantity").value;
     addOrUpdateCartItem('Cart-item', id, itemQuantity);
-    window.location.href = "/user/cart";
 }
 
 async function getAllItems() {

@@ -10,16 +10,9 @@
 
     <div class="w-full flex flex-col justify-center items-center">
         @foreach ($orders as $order)
-            <x-cardDropDown :extended="0" compressedStyles="flex justify-between text-center" extendedStyles="flex flex-col"
-                wrapperStyles="w-11/12 mt-3">
-                <x-slot name="compressed">
-                    <h1>{{ $order->id }}</h1>
-                    <div class="flex">
-                        @foreach ($order->items as $items)
-                            <h1 class="mx-1">{{ $items->item->name }}</h1>
-                        @endforeach
-                    </div>
-                </x-slot>
+            <x-cardDropDown :extended="0" compressedStyles="flex"
+                extendedStyles="flex flex-col" wrapperStyles="w-11/12 mt-3 text-center">
+
 
                 <x-slot name="slot">
                     <div class="flex justify-between w-full">
@@ -44,8 +37,7 @@
                                 <div class="text-center w-full">
                                     <button
                                         onclick="editItem({{ $items->item->id }}, {{ $items->quantity }}, {{ $order->id }})"><img
-                                            class="w-8" src="{{ asset('assets/svg/Edit.svg') }}"
-                                            alt=""></button>
+                                            class="w-8" src="{{ asset('assets/svg/Edit.svg') }}" alt=""></button>
                                 </div>
                             </div>
                         @endforeach
@@ -55,6 +47,15 @@
                             <button class="mx-5" onclick="collapseOrder({{ $order->id }}, this)"><img class="w-8"
                                     src="${svgURl + 'ArrowUp.svg'}" alt=""></button>
                         </div>
+                    </div>
+                </x-slot>
+
+                <x-slot name="compressed">
+                    <h1 class="flex-start">{{ $order->id }}</h1>
+                    <div class="flex w-full justify-center">
+                        @foreach ($order->items as $items)
+                            <h1 class="mx-1">{{ $items->item->name }}</h1>
+                        @endforeach
                     </div>
                 </x-slot>
             </x-cardDropDown>

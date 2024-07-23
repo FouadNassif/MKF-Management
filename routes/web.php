@@ -26,17 +26,16 @@ Route::post('/login', [UserController::class, 'login']);
 Route::post('/item/search', [ItemController::class, 'search'])->name('item.search');
 Route::post('/item/category', [ItemController::class, 'getItemsByCategory'])->name('item.category');
 
+Route::post('/getItems', [ItemController::class, 'getItems'])->name('item.getItemById');
+Route::post('/user/cart/placeOrder', [UserController::class, 'placeOrder'])->name('user.cart.placeOrder');
+
 Route::middleware('auth')->group(function () {
     // User routes
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
-    Route::post('/getItems', [ItemController::class, 'getItems'])->name('item.getItemById');
     Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
-    Route::get('/user/cart', [UserController::class, 'showCart'])->name('user.cart');
 });
-
-Route::post('/user/cart/placeOrder', [UserController::class, 'placeOrder'])->name('user.cart.placeOrder');
 
 // Category routes
 Route::get('/categories', [ItemCategoryController::class, "index"])->name("categories.index");
