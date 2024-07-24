@@ -11,7 +11,7 @@
                     @component('components.cardDropDown')
                         @slot('compressed')
                             <div class="">
-                                {{ $order->customer['name'] }} | {{ $order->customer['addresses'][0]['address1'] }} |
+                                {{ $order->customer['name'] }} | {{ $order->customer['address'] }} |
                                 {{ $order->customer['phoneNumber'] }}
                             </div>
                         @endslot
@@ -24,7 +24,7 @@
                                 </tr>
                                 <tr class="border-b border-Primary">
                                     <th class="py-2 px-4 text-left text-sm font-semibold">Customer Address:</th>
-                                    <td class="py-2 px-4 text-sm">{{ $order->customer['addresses'][0]['address1'] }}</td>
+                                    <td class="py-2 px-4 text-sm">{{ $order->customer['address'] }}</td>
                                 </tr>
                                 <tr class="border-b border-Primary">
                                     <th class="py-2 px-4 text-left text-sm font-semibold">Customer Phone Number:</th>
@@ -46,7 +46,7 @@
                         @slot('compressed')
                             <div class="w-full pr-4 flex justify-between">
                                 <div class="">
-                                    {{ $order->customer['name'] }} | {{ $order->customer['addresses'][0]['address1'] }} |
+                                    {{ $order->customer['name'] }} | {{ $order->customer['address'] }} |
                                     {{ $order->customer['phoneNumber'] }}
                                 </div>
                                 <form action="/driver/deliver/{{ $order->id }}">
@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr class="border-b border-Primary">
                                     <th class="py-2 px-4 text-left text-sm font-semibold">Customer Address:</th>
-                                    <td class="py-2 px-4 text-sm">{{ $order->customer['addresses'][0]['address1'] }}</td>
+                                    <td class="py-2 px-4 text-sm">{{ $order->customer['address'] }}</td>
                                 </tr>
                                 <tr class="border-b border-Primary">
                                     <th class="py-2 px-4 text-left text-sm font-semibold">Customer Phone Number:</th>

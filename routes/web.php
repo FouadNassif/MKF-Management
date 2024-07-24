@@ -71,7 +71,7 @@ Route::middleware("roles:waiter")->group(function () {
 });
 
 Route::middleware("roles:driver")->group(function () {
-    Route::get('/driver/', [ControllersDriverController::class, 'index'])->name('driver.index');
+    Route::get('/driver', [ControllersDriverController::class, 'index'])->name('driver.index');
     Route::get('/driver/checkout/{order}', [ControllersDriverController::class, 'goToCheckout'])->name('driver.checkout');
     Route::get('/driver/deliver/{order}', [ControllersDriverController::class, 'deliverOrder'])->name('driver.deliver');
 });

@@ -20,7 +20,11 @@ class ItemFactory extends Factory
             'https://images3.alphacoders.com/276/276815.jpg',
             'https://wallpapercave.com/wp/wp7029400.jpg',
             'https://besthqwallpapers.com/Uploads/22-2-2020/122844/fried-chicken-fried-food-fried-chicken-legs-4k-fast-food.jpg',
-            'https://wallpaper.forfun.com/fetch/c5/c56e5904a171b851d843dd37401df5d7.jpeg'
+            'https://wallpaper.forfun.com/fetch/c5/c56e5904a171b851d843dd37401df5d7.jpeg',
+            'https://wallpaperaccess.com/full/827001.jpg',
+            'https://wallpaperaccess.com/full/826961.jpg',
+            'https://wallpapercave.com/wp/wp7029317.jpg',
+            'https://wallpaperaccess.com/full/767265.jpg',
         ];
 
         return [
