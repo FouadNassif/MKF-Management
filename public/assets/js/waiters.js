@@ -123,7 +123,6 @@ async function goToPOS(orderId) {
 function checkout(orderId) {
     window.location.href = `/pos/payment?order_id=${orderId}`
 }
-getAllOrders()
 
 function increment() {
     let itemQuan = document.getElementById("itemQuan");
