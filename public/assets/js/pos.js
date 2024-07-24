@@ -187,7 +187,7 @@ async function checkout() {
             .getAttribute("content");
 
         if (items.length < 1) {
-            return
+            return;
         }
 
         const response = await fetch("/pos/order", {
@@ -210,6 +210,33 @@ async function checkout() {
     } catch (error) {
         console.error(error);
     }
+}
+
+async function updateOrder() {
+    const items = JSON.parse(sessionStorage.getItem("POS-Items-Receipt"));
+    const total = JSON.parse(sessionStorage.getItem("POS-Total-Price"));
+    const token = document
+        .querySelector(`meta[name="csrf-token"]`)
+        .getAttribute("content");
+
+    const response = await fetch("/pos/order", {
+        method: "PUT",
+        body: JSON.stringify({
+            items: items,
+            total: total,
+            orderId: orderId,
+        }),
+        headers: {
+            "X-CSRF-TOKEN": token,
+            "Content-type": "application/json",
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error("Failed to checkout");
+    }
+
+    window.location.href = "/waiters";
 }
 
 function toggleModal() {

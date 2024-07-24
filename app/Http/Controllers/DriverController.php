@@ -27,6 +27,6 @@ class DriverController extends Controller
 
     function goToCheckout(Order $order)
     {
-        return redirect()->route('pos.payment.index', ['order_id'=> $order->id])->with('from', 'driver');
+        return redirect()->route('pos.payment.index', ['order_id'=> $order->id]);
     }
 }

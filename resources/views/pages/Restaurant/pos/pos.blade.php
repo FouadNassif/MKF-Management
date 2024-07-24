@@ -3,16 +3,14 @@
 @section('title', 'MKF - POS')
 
 @section('scripts')
+    <script>
+        const orderId = @json(session('orderId'));
+    </script>
     <script src="{{ asset('assets/js/pos.js') }}"></script>
 @endsection
 
 @section('content')
     @include('partials._navbar')
-    @if (session('orderId'))
-        <h1>Order ID: {{ session('orderId') }}</h1>
-    @else
-        <h1>No Order ID Found</h1>
-    @endif
     <div class="p-4 flex gap-4 overflow-x-auto" style="height: calc(100vh - 80px)">
         <div class="min-w-[550px] w-[60vw] flex flex-col gap-2">
             {{-- Categories --}}
@@ -64,8 +62,15 @@
 
             {{-- Action --}}
             <div class="h-[15%] flex items-center justify-evenly">
-                <button onclick="resetReceipt()" class="px-4 py-2 bg-Danger rounded-xl text-white text-2xl">Reset</button>
-                <button onclick="proceed()" class="px-4 py-2 bg-Primary rounded-xl text-white text-2xl">Proceed</button>
+                @if (session('orderId'))
+                    <button class="px-4 py-2 bg-Primary rounded-xl text-white text-xl"
+                        onclick="updateOrder()">Update</button>
+                @endif
+                @if (!session('orderId'))
+                    <button onclick="resetReceipt()"
+                        class="px-4 py-2 bg-Danger rounded-xl text-white text-2xl">Reset</button>
+                    <button onclick="proceed()" class="px-4 py-2 bg-Primary rounded-xl text-white text-2xl">Proceed</button>
+                @endif
             </div>
         </div>
     </div>
@@ -88,8 +93,13 @@
             </table>
         </div>
         <div class="flex items-center justify-evenly mt-8">
-            <button class="px-4 py-2 bg-Danger rounded-xl text-white text-xl" onclick="toggleModal()">Cancel</button>
-            <button class="px-4 py-2 bg-Primary rounded-xl text-white text-xl" onclick="checkout()">Checkout</button>
+            @if (session('orderId'))
+                <button class="px-4 py-2 bg-Primary rounded-xl text-white text-xl" onclick="updateOrder()">Update</button>
+            @endif
+            @if (!session('orderId'))
+                <button class="px-4 py-2 bg-Danger rounded-xl text-white text-xl" onclick="toggleModal()">Cancel</button>
+                <button class="px-4 py-2 bg-Primary rounded-xl text-white text-xl" onclick="checkout()">Checkout</button>
+            @endif
         </div>
     </x-modal>
 @endsection

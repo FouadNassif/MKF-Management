@@ -59,10 +59,12 @@ Route::middleware("roles:cashier,waiter")->group(function () {
     // POS routes
     Route::get('/pos', [PosController::class, 'index'])->name('pos.index');
     Route::post('/pos/order', [PosController::class, 'order'])->name('pos.order');
+    Route::put('/pos/order', [PosController::class, 'updateOrder'])->name('pos.order.update');
 });
 
 Route::middleware("roles:waiter")->group(function () {
     Route::get('/waiters', [WaitersController::class, 'getAllOrder'])->name('waiter.index');
+    Route::get('/waiters/createOrder', [WaitersController::class, 'createOrder'])->name('waiter.order.create');
     Route::post('/waiters/getAllOrder', [WaitersController::class, 'getAllOrderJS'])->name('waiters.allOrders');
     Route::post('/waiter/getOrderById', [WaitersController::class, "getOrderById"])->name('waiters.getOrderById');
     Route::post('/waiter/saveEditedOrder', [WaitersController::class, "saveEditedOrder"])->name('waiters.saveEditedOrder');
