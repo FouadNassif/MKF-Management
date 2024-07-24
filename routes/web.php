@@ -47,7 +47,6 @@ Route::put('/categories/{category}', [ItemCategoryController::class, "update"])-
 // Item routes
 Route::get('/items', [ItemController::class, "index"])->name("items.index");
 Route::get('/categories/{category}/item/create', [ItemController::class, "create"])->name("categories.items.create");
-Route::get('/items/{item}', [ItemController::class, "show"])->name("items.show");
 Route::get('/items/{item}/edit', [ItemController::class, "edit"])->name("items.edit");
 Route::post('/item/creates', [ItemController::class, "store"])->name("categories.items.store");
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
@@ -92,4 +91,10 @@ Route::middleware("roles:admin")->group(function () {
     Route::delete('/admin/waiter/{id}', [dashboardController::class, 'destroyWaiters'])->name('waiter.destroy');
     Route::get('/admin/orders', [dashboardController::class, 'getOrders'])->name('pages.admin.orders');
     Route::get('/admin/menuItems', [dashboardController::class, 'getMenuItems'])->name('pages.admin.menuItems');
+    Route::delete('/admin/menuItems/{id}', [dashboardController::class, 'destroyItem'])->name('item.destroy');
+    Route::get('/admin/addItems', [dashboardController::class, 'addItems'])->name('pages.admin.addItems');
+
+
+    Route::get('items/create', [dashboardController::class, 'createItem'])->name('items.create');
+    Route::post('items', [dashboardController::class, 'storeItem'])->name('items.store');
 });
