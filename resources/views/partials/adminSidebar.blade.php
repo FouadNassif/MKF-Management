@@ -7,13 +7,7 @@
         </div>
         <div class=" p-5 ">
             <div class="p-4 my-4 bg-PrimaryD text-center text-xl rounded">
-                <p class="text-white">Orders</p>
-            </div>
-            <div class="p-4 mt-4 bg-PrimaryD text-center text-xl rounded">
-                <p class="text-white">Payments</p>
-            </div>
-            <div class="p-4 mt-4 bg-PrimaryD text-center text-xl rounded">
-                <p class="text-white">Tables</p>
+                <a href="{{ route('pages.admin.orders') }}" class="text-white">Orders</a>
             </div>
             <div class="p-4 mt-4 bg-PrimaryD text-center text-xl rounded">
                 <a href="{{ route('pages.admin.waiter') }}" class="text-white">Waiters</a>
@@ -25,7 +19,7 @@
                 <a href="{{ route('pages.admin.customer') }}" class="text-white">Customers</a>
             </div>
             <div class="p-4 mt-4 bg-PrimaryD text-center text-xl rounded">
-                <p class="text-white">Menu Item</p>
+                <a href="{{ route('pages.admin.menuItems') }}" class="text-white">Menu Item</a>
             </div>
         </div>
     </div>

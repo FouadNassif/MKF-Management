@@ -32,7 +32,7 @@ class PosController extends Controller
             "cashier_id" => Auth::id(),
             "status" => "Not Payed",
             "total" => $total,
-            "type" => "DineIn"
+            "type" => "TakeAway"
         ]);
         foreach ($items as $item) {
             OrderItem::create([

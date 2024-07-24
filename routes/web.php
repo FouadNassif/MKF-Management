@@ -7,7 +7,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\DriverController;
 use App\Http\Controllers\Admin\WaiterController;
 use App\Http\Controllers\ItemCategoryController;
-use App\Http\Controllers\Admin\CustomerController;
 use App\Http\Controllers\Admin\dashboardController;
 use App\Http\Controllers\DriverController as ControllersDriverController;
 use App\Http\Controllers\WaitersController;
@@ -48,7 +47,6 @@ Route::put('/categories/{category}', [ItemCategoryController::class, "update"])-
 // Item routes
 Route::get('/items', [ItemController::class, "index"])->name("items.index");
 Route::get('/categories/{category}/item/create', [ItemController::class, "create"])->name("categories.items.create");
-Route::get('/items/{item}', [ItemController::class, "show"])->name("items.show");
 Route::get('/items/{item}/edit', [ItemController::class, "edit"])->name("items.edit");
 Route::post('/item/creates', [ItemController::class, "store"])->name("categories.items.store");
 Route::delete('/items/{item}', [ItemController::class, "destroy"])->name("items.destroy");
@@ -84,10 +82,18 @@ Route::post('/pos/payment', [PosController::class, 'paymentStore'])->name('pos.p
 Route::middleware("roles:admin")->group(function () {
 
     Route::get('/admin', [dashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/admin/customer', [CustomerController::class, 'index'])->name('pages.admin.customer');
-    Route::delete('/admin/customer/{id}', [CustomerController::class, 'destroy'])->name('customer.destroy');
-    Route::get('/admin/driver', [DriverController::class, 'index'])->name('pages.admin.driver');
-    Route::delete('/admin/driver/{id}', [DriverController::class, 'destroy'])->name('driver.destroy');
-    Route::get('/admin/waiter', [WaiterController::class, 'index'])->name('pages.admin.waiter');
-    Route::delete('/admin/waiter/{id}', [WaiterController::class, 'destroy'])->name('waiter.destroy');
+    Route::get('/admin/customer', [dashboardController::class, 'getCustomers'])->name('pages.admin.customer');
+    Route::delete('/admin/customer/{id}', [dashboardController::class, 'destroyCustomers'])->name('customer.destroy');
+    Route::get('/admin/driver', [dashboardController::class, 'getDrivers'])->name('pages.admin.driver');
+    Route::delete('/admin/driver/{id}', [dashboardController::class, 'destroyDrivers'])->name('driver.destroy');
+    Route::get('/admin/waiter', [dashboardController::class, 'getWaiters'])->name('pages.admin.waiter');
+    Route::delete('/admin/waiter/{id}', [dashboardController::class, 'destroyWaiters'])->name('waiter.destroy');
+    Route::get('/admin/orders', [dashboardController::class, 'getOrders'])->name('pages.admin.orders');
+    Route::get('/admin/menuItems', [dashboardController::class, 'getMenuItems'])->name('pages.admin.menuItems');
+    Route::delete('/admin/menuItems/{id}', [dashboardController::class, 'destroyItem'])->name('item.destroy');
+    Route::get('/admin/addItems', [dashboardController::class, 'addItems'])->name('pages.admin.addItems');
+
+
+    Route::get('items/create', [dashboardController::class, 'createItem'])->name('items.create');
+    Route::post('items', [dashboardController::class, 'storeItem'])->name('items.store');
 });

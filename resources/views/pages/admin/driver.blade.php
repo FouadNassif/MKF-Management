@@ -7,7 +7,6 @@
                 <th class="py-3 px-6 text-left">ID</th>
                 <th class="py-3 px-6 text-left">Name</th>
                 <th class="py-3 px-6 text-left">Phone Number</th>
-                <th class="py-3 px-6 text-left">Created At</th>
                 <th class="py-3 px-6 text-left">Actions</th>
             </tr>
         </thead>
@@ -17,7 +16,6 @@
                     <td class="py-3 px-6 text-left whitespace-nowrap">{{ $driver->id }}</td>
                     <td class="py-3 px-6 text-left">{{ $driver->name }}</td>
                     <td class="py-3 px-6 text-left">{{ $driver->phoneNumber }}</td>
-                    <td class="py-3 px-6 text-left">{{ $driver->created_at }}</td>
                     <td class="py-3 px-6 text-left">
                         <form action="{{ route('driver.destroy', $driver->id) }}" method="POST">
                             @csrf
