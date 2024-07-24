@@ -11,7 +11,15 @@ class PosController extends Controller
 {
     public function index()
     {
-        return view("pages.Restaurant.pos.pos");
+        $userRole = Auth::user()->role;
+
+        $order = null;
+        $items = null;
+        if (session('orderId')) {
+            $order = Order::find(session('orderId'));
+            $items = $order->items;
+        }
+        return view("pages.Restaurant.pos.pos", ['role' => $userRole, 'order' => $order, 'items' => $items]);
     }
 
     public function order(Request $request)
@@ -23,7 +31,8 @@ class PosController extends Controller
         $order = Order::create([
             "cashier_id" => Auth::id(),
             "status" => "Not Payed",
-            "total" => $total
+            "total" => $total,
+            "type" => "DineIn"
         ]);
         foreach ($items as $item) {
             OrderItem::create([
@@ -42,9 +51,12 @@ class PosController extends Controller
 
         $order = Order::with("items.item")->findOrFail($order_id);
 
+        $userRole = Auth::user()->role;
+
         return view("pages.Restaurant.pos.payment", [
             "order" => $order,
-            "items" => $order["items"]
+            "items" => $order["items"],
+            'role' => $userRole
         ]);
     }
 
@@ -60,5 +72,27 @@ class PosController extends Controller
         return [
             "status" => $updated,
         ];
+    }
+
+    function updateOrder(Request $request)
+    {
+        $body = $request->all();
+        $items = $body["items"];
+        $total = $body["total"];
+        $order_id = $body['orderId'];
+
+        $order = Order::findOrFail($order_id);
+
+        $order->update([
+            'total' => $total
+        ]);
+
+        foreach ($items as $item) {
+            OrderItem::create([
+                "order_id" => $order["id"],
+                "quantity" => $item["quantity"],
+                "item_id" => $item["id"],
+            ]);
+        }
     }
 }

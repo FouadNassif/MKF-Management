@@ -25,7 +25,7 @@ async function showItemModal(ref) {
 }
 
 function renderItemModal(item) {
-    let imageURL = item['imageURL'] ? `http://127.0.0.1:8000/storage/itemImage/${item['imageURL']}` : '';
+    let imageURL = item['imageURL'] ? `${item['imageURL']}` : '';
     let modalContent = `
         <div>
             <button onclick="closeModal()"><img src="http://127.0.0.1:8000/assets/svg/Close.svg"></button>
@@ -112,11 +112,11 @@ function emptyCart() {
 }
 
 function showItemCartCard(item, quant) {
-    let imageURL = item['imageURL'] ? `http://127.0.0.1:8000/storage/itemImage/${item['imageURL']}` : "";
+    let imageURL = item['imageURL'] ? `${item['imageURL']}` : "";
     totalPrice += item['price'] * quant;
     return `
         <div class="flex border-2 border-Primary p-2 rounded-xl mt-2 bg-white itemCardCart">
-            <img src="${imageURL}" class="w-20 rounded-lg h-16">
+            <img src="${imageURL}" class="w-20 rounded-lg h-18">
             <div class="ml-5">
                 <p class="text-lg">${item['name']}
                 <p class="text-xs font-mono">Single Price: ${item['price']}</p>
@@ -340,13 +340,16 @@ async function placeOrder() {
     }
 
     const placed = await response.json();
-    if(placed.Success){
+    if (placed.login) {
+        window.location.href = "/login";
+    }
+    if (placed.Success) {
         deleteAllTheCart()
         window.location.href = "/";
     }
 }
 
-function deleteAllTheCart(){
+function deleteAllTheCart() {
     document.cookie = "Cart-item" + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 }
 init();

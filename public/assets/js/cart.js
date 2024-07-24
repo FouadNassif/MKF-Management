@@ -12,7 +12,6 @@ function addItemToCart(ref) {
     const id = ref.getAttribute("data-itemId");
     let itemQuantity = document.getElementById("item-quantity").value;
     addOrUpdateCartItem('Cart-item', id, itemQuantity);
-    window.location.href = "/user/cart";
 }
 
 async function getAllItems() {
@@ -51,7 +50,7 @@ async function getAllItems() {
 
 
 function showItemCartCard(item, quant) {
-    let imageURL = item['imageURL'] ? `http://127.0.0.1:8000/storage/itemImage/${item['imageURL']}` : "";
+    let imageURL =`${item['imageURL']}`;
     totalPrice += item['price'] * quant;
     return `
     <div class="flex justify-between border-2 border-Primary p-2 rounded-xl my-5">

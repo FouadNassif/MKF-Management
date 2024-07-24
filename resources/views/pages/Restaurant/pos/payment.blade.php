@@ -26,6 +26,15 @@
                 }
                 const updated = await response.json();
                 if (updated.status) {
+                    @if ($role === 'driver')
+                        window.location.href = "/driver/";
+                        return
+                    @endif
+
+                    @if ($role === 'waiter')
+                        window.location.href = "/waiters/";
+                        return
+                    @endif
                     window.location.href = "/pos/";
                 } else {
                     throw new Error("Payment Failed: Internal Server Error");

@@ -14,11 +14,17 @@ class Order extends Model
         "type",
         "cashier_id",
         "driver_id",
+        "customer_id",
+        'waiter_id',
         "total"
     ];
 
     public function items()
     {
         return $this->hasMany(OrderItem::class, "order_id", "id");
+    }
+
+    public function customer() {
+        return $this->belongsTo(User::class, "customer_id", "id");
     }
 }
