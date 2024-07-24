@@ -2,15 +2,15 @@ let itemSearchInp = document.getElementById("itemSearchInp");
 let itemContainer = document.getElementById("itemContainer");
 
 itemSearchInp.addEventListener('input', function () {
-    if (itemSearchInp.value.trim() == "" ) {
-        getAllItems()
-        enableCategory()
+    if (itemSearchInp.value.trim() === "") {
+        getAllItems();
+        enableCategory();
     } else {
-        SerachItem(itemSearchInp.value);
+        searchItem(itemSearchInp.value);
     }
 });
 
-async function SerachItem(txt) {
+async function searchItem(txt) {
     const token = document.querySelector(`meta[name="csrf-token"]`).getAttribute("content");
 
     const response = await fetch("/item/search", {
@@ -56,9 +56,7 @@ async function getAllItems() {
 }
 
 async function searchByCategory(id, but) {
-    const token = document
-        .querySelector(`meta[name="csrf-token"]`)
-        .getAttribute("content");
+    const token = document.querySelector(`meta[name="csrf-token"]`).getAttribute("content");
 
     const response = await fetch("/item/category", {
         method: "POST",
@@ -111,7 +109,6 @@ function renderItems(item) {
 }
 
 function noResultFound() {
-
     return ` 
     <div class='p-2 rounded-xl border-2 border-black w-96 m-5 min-h-90 max-h-90'>
             <img src='http://127.0.0.1:8000/assets/img/noresult.png' class='w-full h-48 object-cover'>
@@ -124,7 +121,7 @@ function noResultFound() {
                 <button type="button" class='bg-Primary p-1 text-white rounded-lg w-1/4'>ADD</button>
                 <p>$0.00001</p>
             </div>
-        </div>`
+        </div>`;
 }
 
 function removeSelectCategoryColor(but) {

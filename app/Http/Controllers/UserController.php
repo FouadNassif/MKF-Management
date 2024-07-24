@@ -45,7 +45,7 @@ class UserController extends Controller
             'name' => 'required|string|unique:Users|min:4',
             'phoneNumber' => 'required|string|unique:Users|min:8',
             'password' => "required|confirmed|min:8",
-            'address1' => "required|string|min:1",
+            'address' => "required|string|min:1",
         ]);
 
         // Add the credentials of the user to the database
@@ -53,16 +53,12 @@ class UserController extends Controller
             'name' => $request->name,
             'phoneNumber' => $request->phoneNumber,
             'password' => bcrypt($request->password),
+            'address' => $request->address,
             'role' => 'customer',
         ]);
 
         // Give the auth to the user
         Auth::login($user);
-
-        Address::create([
-            'user_id' => $user->id,
-            'address1' => $request->address1,
-        ]);
 
         // Return  to the home page
         session()->flash('status', 'You created a account successfully');
@@ -71,56 +67,26 @@ class UserController extends Controller
 
     public function profile()
     {
-        $addresses = Address::where('user_id', Auth::user()->id)->get();
-        $address1 = $addresses[0]->address1;
-        $address2 = $addresses[0]->address2;
-        $address3 = $addresses[0]->address3;
-        $address4 = $addresses[0]->address4;
-        $data = [$address1, $address2, $address3, $address4];
-        return view('pages.User.profile', compact('data'));
+        return view('pages.User.profile');
     }
 
     public function updateProfile(Request $request)
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'min:4', Rule::unique('Users')->ignore(Auth::id()),],
-            'address1' => 'max:255|min:10',
-            'address2' => 'string|max:255|min:10|nullable',
-            'address3' => 'string|max:255|min:10|nullable',
-            'address4' => 'string|max:255|min:10|nullable',
+            'address' => 'max:255|min:10',
         ]);
         $user = Auth::user();
 
         if ($user) {
-            // Update the name based on the userid
-            User::where('id', $user->id)->update(['name' => $request->name]);
-
-            Address::where('user_id', $user->id)->update([
-                'address1' => $request->address1,
-                'address2' => $request->address2,
-                'address3' => $request->address3,
-                'address4' => $request->address4,
+            User::where('id', $user->id)->update([
+                'name' => $request->name,
+                'address' => $request->address
             ]);
             session()->flash('status', 'Your profile is updated successfully');
         }
 
         return redirect()->back();
-    }
-
-    public function deleteAddress(Request $request, $address)
-    {
-        // $t = Auth::user()->addresses()->get();
-        // dd($t[0]);
-        if (Auth::check()) {
-            $deleted = Address::where('user_id', Auth::user()->id)->where($address, '!=', $address)->update([$address => null]);
-            if ($deleted) {
-                session()->flash('status', 'Address deleted successfully');
-                return redirect()->back();
-            } else {
-                session()->flash('status', 'Something went wrong');
-                return redirect()->back();
-            }
-        }
     }
 
     public function logout()
@@ -137,7 +103,7 @@ class UserController extends Controller
 
     public function placeOrder(Request $request)
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             session()->flash('status', 'Please Login | Sign up to Checkout!');
             return response()->json(["login" => true]);
         }

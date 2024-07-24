@@ -34,7 +34,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/user/profile', [UserController::class, 'profile'])->name('user.profile');
     Route::post('/user/updateProfile', [UserController::class, 'updateProfile'])->name('user.updateProfile');
     Route::get('/user/logout', [UserController::class, 'logout'])->name('user.logout');
-    Route::get('/user/deleteAddress/{address}', [UserController::class, 'deleteAddress'])->name('user.deleteAddress');
 });
 
 // Category routes
