@@ -93,7 +93,7 @@ function updateItemContainer(items) {
 }
 
 function renderItems(item) {
-    let imageURL = item['imageURL'] ? `http://127.0.0.1:8000/storage/itemImage/${item['imageURL']}` : '';
+    let imageURL = item['imageURL'] ? `${item['imageURL']}` : '';
     let HTMLCard = `
         <div class='p-2 rounded-xl border-2 border-black w-96 m-5 min-h-90 max-h-90'>
             <img src='${imageURL}' alt='${item['name']}' class='w-full h-48 object-cover'>
