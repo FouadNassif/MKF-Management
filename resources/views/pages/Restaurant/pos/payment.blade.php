@@ -4,6 +4,13 @@
 
 @section('scripts')
     <script>
+        @if ($role === 'driver')
+            document.getElementById('cancel').href = "/driver/"
+        @endif
+
+        @if ($role === 'waiter')
+            document.getElementById('cancel').href = "/waiters/"
+        @endif
         async function complete() {
             try {
                 const token = document
@@ -97,7 +104,8 @@
                         <p>Change: <span id="change">0</span>$</p>
                     </div>
                     <div class="flex justify-evenly">
-                        <a href="/pos" class="px-4 py-2 bg-Danger rounded-xl text-white text-lg">Cancel</a>
+                        <a href="/pos" id="cancel"
+                            class="px-4 py-2 bg-Danger rounded-xl text-white text-lg">Cancel</a>
                         <button class="px-4 py-2 bg-Primary rounded-xl text-white text-lg"
                             onclick="complete()">Complete</button>
                     </div>

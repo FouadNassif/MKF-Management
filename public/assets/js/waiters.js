@@ -51,7 +51,7 @@ function showEditModal(itemName, itemQuan, orderId, itemId) {
                     Item Name: ${itemName}
                 </div>
                 <div class="my-3">
-                    Item Quantity: 
+                    Item Quantity:
                     <button onclick="decrement()" class="bg-Primary text-white px-2">-</button>
                     <input type="number" size="1" id="itemQuan" value="${itemQuan}" required class="border outline-none border-gray-300 w-fit rounded-md p-1" readonly>
                     <button onclick="increment()" class="bg-Primary text-white px-2">+</button>
@@ -123,7 +123,7 @@ async function goToPOS(orderId) {
 function checkout(orderId) {
     window.location.href = `/pos/payment?order_id=${orderId}`
 }
-getAllOrders()
+// getAllOrders()
 
 function increment() {
     let itemQuan = document.getElementById("itemQuan");
