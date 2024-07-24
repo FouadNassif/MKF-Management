@@ -20,4 +20,4 @@ class DatabaseSeeder extends Seeder
         ItemCategory::factory(20)->create();
         Item::factory(50)->create();
     }
-}
+

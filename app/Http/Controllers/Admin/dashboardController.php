@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Item;
 use App\Models\User;
 use App\Models\Order;
-use App\Models\Item;
+use App\Models\ItemCategory;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class dashboardController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         return view('pages.admin.dashboard');
     }
 
@@ -95,8 +97,10 @@ class dashboardController extends Controller
         return redirect()->route('pages.admin.menuItems');
     }
 
-    public function addItems(){
-        return view('pages.admin.addItems');
+    public function addItems()
+    {
+        $categories = ItemCategory::all();
+        return view('pages.admin.addItems', compact('categories'));
     }
 
     // add items 
@@ -123,6 +127,6 @@ class dashboardController extends Controller
         $item->category_id = $request->category_id;
         $item->save();
 
-        return redirect()->route('items.create')->with('success', 'Item added successfully');
+        return redirect()->route('pages.admin.menuItems')->with('success', 'Item added successfully');
     }
 }
