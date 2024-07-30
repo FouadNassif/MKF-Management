@@ -4,7 +4,7 @@
     <a href="{{ route('pages.admin.addItems') }}" class="text-gray-100 p-2 rounded-lg bg-Secondary"> Add items </a>
     <div class="flex flex-wrap mx-4">
         @foreach ($items as $item)
-            <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 p-4">
+            <div class="w-full lg:w-1/4 p-4">
                 <div class="bg-white rounded-lg overflow-hidden">
                     <img src="{{ $item->imageURL }}" alt="" class="w-full h-48 ">
                     <div class="p-4">
