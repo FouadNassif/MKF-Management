@@ -47,14 +47,13 @@ class dashboardController extends Controller
 
         // Find the waiter by ID and delete it
         $driver = User::findOrFail($id);
-            // Check if the user has the role 'waiter'
+        // Check if the user has the role 'waiter'
         if ($driver->role === 'driver') {
             // Set the password to null
             $driver->password = "admin1234";
             $driver->save();
             // Redirect back with success message
-            // Session::flash('message', 'Waiter password changed successfully.');
-            return redirect()->route('pages.admin.driver')->with('success', 'password changed successfully.');
+            return redirect()->route('pages.admin.driver')->with('status', 'Driver password changed successfully!');
         }
     }
 
@@ -68,17 +67,15 @@ class dashboardController extends Controller
 
     public function deleteWaiterPassword($id)
     {
-
         // Find the waiter by ID and delete it
         $waiter = User::findOrFail($id);
-            // Check if the user has the role 'waiter'
+        // Check if the user has the role 'waiter'
         if ($waiter->role === 'waiter') {
             // Set the password to null
             $waiter->password = "admin1234";
             $waiter->save();
             // Redirect back with success message
-            // Session::flash('message', 'Waiter password changed successfully.');
-            return redirect()->route('pages.admin.waiter')->with('success', 'password changed successfully.');
+            return redirect()->route('pages.admin.waiter')->with('status', 'Waiter password changed successfully!');
         }
     }
 
@@ -130,15 +127,15 @@ class dashboardController extends Controller
             'imageURL' => 'required|string',
             'category_id' => 'required|numeric',
         ]);
-
-        $item = new Item();
-        $item->name = $request->name;
-        $item->description = $request->description;
-        $item->price = $request->price;
-        $item->imageURL = $request->imageURL;
-        $item->category_id = $request->category_id;
-        $item->save();
-
-        return redirect()->route('pages.admin.menuItems')->with('success', 'Item added successfully');
+        $item = Item::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'imageURL' => $request->imageURL,
+            'category_id' => $request->category_id,
+        ]);
+        if ($item) {
+            return redirect()->route('pages.admin.menuItems')->with('status', 'Item added successfully');
+        }
     }
 }
