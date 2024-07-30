@@ -85,15 +85,13 @@ Route::middleware("roles:admin")->group(function () {
     Route::get('/admin/customer', [dashboardController::class, 'getCustomers'])->name('pages.admin.customer');
     Route::delete('/admin/customer/{id}', [dashboardController::class, 'destroyCustomers'])->name('customer.destroy');
     Route::get('/admin/driver', [dashboardController::class, 'getDrivers'])->name('pages.admin.driver');
-    Route::delete('/admin/driver/{id}', [dashboardController::class, 'destroyDrivers'])->name('driver.destroy');
+    Route::delete('/admin/driver/{id}/password', [dashboardController::class, 'deleteDriverPassword'])->name('driver.destroy');
     Route::get('/admin/waiter', [dashboardController::class, 'getWaiters'])->name('pages.admin.waiter');
-    Route::delete('/admin/waiter/{id}', [dashboardController::class, 'destroyWaiters'])->name('waiter.destroy');
+    Route::delete('/admin/waiter/{id}/password', [dashboardController::class, 'deleteWaiterPassword'])->name('waiter.destroy');
     Route::get('/admin/orders', [dashboardController::class, 'getOrders'])->name('pages.admin.orders');
     Route::get('/admin/menuItems', [dashboardController::class, 'getMenuItems'])->name('pages.admin.menuItems');
     Route::delete('/admin/menuItems/{id}', [dashboardController::class, 'destroyItem'])->name('item.destroy');
     Route::get('/admin/addItems', [dashboardController::class, 'addItems'])->name('pages.admin.addItems');
-
-
     Route::get('items/create', [dashboardController::class, 'createItem'])->name('items.create');
     Route::post('items', [dashboardController::class, 'storeItem'])->name('items.store');
 });

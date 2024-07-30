@@ -7,15 +7,17 @@
                 <th class="py-3 px-6 text-left">ID</th>
                 <th class="py-3 px-6 text-left">Name</th>
                 <th class="py-3 px-6 text-left">Phone Number</th>
+                <th class="py-3 px-6 text-left">Password</th>
                 <th class="py-3 px-6 text-left">Actions</th>
             </tr>
         </thead>
         <tbody class="text-gray-600 text-sm font-light">
             @foreach($drivers as $driver)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <tr class="border-b hover:bg-gray-100">
                     <td class="py-3 px-6 text-left whitespace-nowrap">{{ $driver->id }}</td>
                     <td class="py-3 px-6 text-left">{{ $driver->name }}</td>
                     <td class="py-3 px-6 text-left">{{ $driver->phoneNumber }}</td>
+                    <td class="py-3 px-6 text-left">{{ $driver->password }}</td>
                     <td class="py-3 px-6 text-left">
                         <form action="{{ route('driver.destroy', $driver->id) }}" method="POST">
                             @csrf

@@ -14,7 +14,7 @@
         </thead>
         <tbody class="text-gray-600 text-sm font-light">
             @foreach($orders as $order)
-                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                <tr class="border-b hover:bg-gray-100">
                     <td class="py-3 px-6 text-left">{{ $order->id }}</td>
                     <td class="py-3 px-6 text-left">{{ $order->cashier_id }}</td>
                     <td class="py-3 px-6 text-left">{{ $order->customer_id }}</td>

@@ -42,14 +42,20 @@ class dashboardController extends Controller
         return view('pages.admin.driver', compact('drivers'));
     }
 
-    public function destroyDrivers($id)
+    public function deleteDriverPassword($id)
     {
-        // Find the driver by ID and delete it
-        $driver = User::findOrFail($id);
-        $driver->delete();
 
-        // Redirect back with a success message
-        return redirect()->route('pages.admin.driver');
+        // Find the waiter by ID and delete it
+        $driver = User::findOrFail($id);
+            // Check if the user has the role 'waiter'
+        if ($driver->role === 'driver') {
+            // Set the password to null
+            $driver->password = "admin1234";
+            $driver->save();
+            // Redirect back with success message
+            // Session::flash('message', 'Waiter password changed successfully.');
+            return redirect()->route('pages.admin.driver')->with('success', 'password changed successfully.');
+        }
     }
 
     // driver controller
@@ -60,14 +66,20 @@ class dashboardController extends Controller
         return view('pages.admin.waiter', compact('waiters'));
     }
 
-    public function destroyWaiters($id)
+    public function deleteWaiterPassword($id)
     {
+
         // Find the waiter by ID and delete it
         $waiter = User::findOrFail($id);
-        $waiter->delete();
-
-        // Redirect back with a success message
-        return redirect()->route('pages.admin.waiter');
+            // Check if the user has the role 'waiter'
+        if ($waiter->role === 'waiter') {
+            // Set the password to null
+            $waiter->password = "admin1234";
+            $waiter->save();
+            // Redirect back with success message
+            // Session::flash('message', 'Waiter password changed successfully.');
+            return redirect()->route('pages.admin.waiter')->with('success', 'password changed successfully.');
+        }
     }
 
     // order controller
