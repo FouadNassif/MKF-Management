@@ -14,7 +14,7 @@ MKF Management is a comprehensive restaurant management system designed to handl
    
 5. **Order Calculation**: Automatically calculate the final price of orders placed online or in the restaurant, including taxes and any additional charges.
    
-6. **Statistics Generation**: Generate comprehensive statistics and reports, offering insights into sales, customer preferences, and more.
+6. **Statistics Generation**: Generate comprehensive statistics and reports, offering insights into sales, customer preferences, and more.`
 
 ## How to Use
 
